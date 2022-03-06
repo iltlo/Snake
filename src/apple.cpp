@@ -1,7 +1,6 @@
-#include <ncurses.h>
 #include <random>
 
-#include "visuals.hpp"
+#include "apple.hpp"
 
 // TODO: shall prevent the apple got generated on the snake body
 void genApple(WINDOW * win){

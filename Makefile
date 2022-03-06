@@ -1,21 +1,32 @@
-FLAGS = -lncurses ${FLAGS}
-INCLUDE = -I /INCLUDE
+FLAGS = -pedantic-errors -std=c++11
+LIB = -lcurses
+vpath %.cpp src
+vpath %.hpp include
+INCLUDE = -I ./include
 
-all: move.o visuals.o new_game.o snake
+all: main
 
-move.cpp:
-	g++ ${FLAGS} -c $< ${INCLUDE}
+# snake.cpp:
+# 	g++ ${FLAGS} -c $< ${INCLUDE}
 
-apple.cpp:
-	g++ ${FLAGS} -c $< ${INCLUDE}
+# apple.cpp:
+# 	g++ ${FLAGS} -c $< ${INCLUDE}
 
-visuals.cpp:
-	g++ ${FLAGS} -c $< ${INCLUDE}
+# visuals.cpp:
+# 	g++ ${FLAGS} -c $< ${INCLUDE}
 
-new_game.cpp:
-	g++ ${FLAGS} -c $< ${INCLUDE}
+# new_game.cpp:
+# 	g++ ${FLAGS} -c $< ${INCLUDE}
 
-move.o: move.cpp move.hpp
+# start_menu.cpp:
+# 	g++ ${FLAGS} -c $< ${INCLUDE}
+
+# main.cpp:
+# 	g++ ${FLAGS} -c $< ${INCLUDE}
+
+#######################################
+
+snake.o: snake.cpp snake.hpp visuals.hpp apple.hpp
 	g++ ${FLAGS} -c $< ${INCLUDE}
 
 apple.o: apple.cpp apple.hpp
@@ -24,13 +35,21 @@ apple.o: apple.cpp apple.hpp
 visuals.o: visuals.cpp visuals.hpp
 	g++ ${FLAGS} -c $< ${INCLUDE}
 
-new_game.o: new_game.cpp new_game.hpp
+new_game.o: new_game.cpp new_game.hpp snake.hpp visuals.hpp
 	g++ ${FLAGS} -c $< ${INCLUDE}
 
-snake: move.o apple.o visuals.o new_game.o 
-	g++ $(FLAGS) $^ -o $@
+start_menu.o: start_menu.cpp start_menu.hpp
+	g++ ${FLAGS} -c $< ${INCLUDE}
+
+main.o: main.cpp start_menu.hpp new_game.hpp
+	g++ ${FLAGS} -c $< ${INCLUDE}
+
+#########################################
+
+main: main.o start_menu.o new_game.o snake.o apple.o visuals.o
+	g++ $(FLAGS) $^ ${LIB} -o $@
 
 clean:
-	rm -f snake *.o
+	rm *.o -f main
 
 .PHONY: clean
