@@ -25,6 +25,7 @@ int main()
 
             case(s_exit_game):
                 n_exit_game = false;
+                curs_set(1);
                 break;
 
             default:

@@ -5,6 +5,8 @@
 
 char start_menu()
 {
+    curs_set(0);
+
     char choice = 0;
     bool n_chosen = true;
     WINDOW* menu_pic_win = newwin(menu_pic_y, menu_pic_x, 0, 0);

@@ -11,8 +11,6 @@ void new_game(){
     getmaxyx(stdscr, yMax, xMax);                               // get screen size
 
     // initialize a play window
-    printw("Your std win size: %dx%d, please adjust your window to 80x24.", xMax, yMax);
-    getch();
     move(0,0);
     clrtoeol();
     // int height=yMax-1, width=((xMax)%2==0 ? xMax-2 : xMax-1), starty=1, startx=1;        // dimension of play window

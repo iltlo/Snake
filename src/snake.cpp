@@ -19,13 +19,13 @@ int Snake::Move(){
     
     nodelay(curwin,1);
     
-    storeSnake();                                  // storing position of snake tail
+    if ( snake.size() <= snakeLen ) storeSnake();          // storing position of snake tail
     
     int choice = (mvCount==0 ? KEY_RIGHT : wgetch(curwin)); // default run direction: right
     if (choice == previous) choice = -1;
 
     // *******
-    mvwprintw(stdscr, 0, 0, "count: %d choice: %d      ", mvCount, choice);   // for debug
+    mvwprintw(stdscr, 0, 0, "count: %d choice: %d SnkLen: %d VecLen: %d  ", mvCount, choice, snakeLen, snake.size());   // for debug
     // *******
     if (choice == ' ') pause = 1;               // pasue state turns true (menu bar will pop out)
 
@@ -34,7 +34,7 @@ int Snake::Move(){
     keyChoice(curwin, yPos, xPos, sBody, choice, pause); 
     pause = 0;
 
-    if (mvCount>=snakeLen && snake.size()%snakeLen!=0) cutSnake(curwin, snake);     // cut the snake tail
+    if (mvCount>=snakeLen && snake.size()%snakeLen==0) cutSnake(curwin, snake);     // cut the snake tail
     previous = choice;
     mvCount++;
 
@@ -47,7 +47,7 @@ int Snake::Move(){
         genApple(curwin);
     }
     
-    // TODO: only if ate apple, increase length
+    // TODO: only if ate apple, increase length and speed
     if (mvCount%10 == 0){                        // increase snake length
         snakeLen++;
     }
