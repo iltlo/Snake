@@ -1,30 +1,76 @@
-#include <ncurses.h>
-#include <unistd.h>
-#include "move.h"
-#include "visuals.h"
+#include <algorithm>
+#include <iostream>
 
-int main(){
-    initscr(); noecho();
+#include "snake.hpp"
+#include "visuals.hpp"
+#include "apple.hpp"                              // genApple()
 
-    int yMax, xMax;
-    getmaxyx(stdscr, yMax, xMax);                               // get screen size
+Snake::Snake(WINDOW * win, int y, int x){       // Snake class constructor
+    curwin = win; //current window
+    getmaxyx(curwin, yMax, xMax);
+    yPos = yMax/2-1;
+    xPos = xMax/2-1;
+    mvwprintw(stdscr, 0, 0, "gamewin xMax: %d yMax: %d", xMax, yMax);
+    keypad(curwin, true);
+    curs_set(0);
+}
 
-    // initialize a play window
-    printw("Your std win size: %dx%d, please adjust your window to 80x24.", xMax, yMax);
-    getch();
-    move(0,0);
-    clrtoeol();
-    // int height=yMax-1, width=((xMax)%2==0 ? xMax-2 : xMax-1), starty=1, startx=1;        // dimension of play window
-    int height=23, width=80, starty=1, startx=0;                // standardized window size to 80x24
-    WINDOW * gamewin = newwin(height, width, starty, startx);
-    Snake * player = new Snake(gamewin, 1, 1);                  // initialized new class member: player
+int Snake::Move(){
+    
+    nodelay(curwin,1);
+    
+    storeSnake();                                  // storing position of snake tail
+    
+    int choice = (mvCount==0 ? KEY_RIGHT : wgetch(curwin)); // default run direction: right
+    if (choice == previous) choice = -1;
 
-    drawBorder(gamewin);                                        // requires further decoration
-    do {                                                        // print snake before getting the choice
-        showHead(gamewin, player->get_yPos(), player->get_xPos(), player->get_sHead());
-        usleep( (player->get_speed())*1000 );
-    } while (player->Move() != 'q');                            // MAIN PROGRAM LOOP
+    // *******
+    mvwprintw(stdscr, 0, 0, "count: %d choice: %d      ", mvCount, choice);   // for debug
+    // *******
+    if (choice == ' ') pause = 1;               // pasue state turns true (menu bar will pop out)
 
-    getch();
-    endwin(); 
+    if (choice == -1 || pause == 1) choice = previous;    // continue the same path if no input
+
+    keyChoice(curwin, yPos, xPos, sBody, choice, pause); 
+    pause = 0;
+
+    if (mvCount>=snakeLen && snake.size()%snakeLen!=0) cutSnake(curwin, snake);     // cut the snake tail
+    previous = choice;
+    mvCount++;
+
+    if (!checkValid() && mvCount>COUNTDOWN){    // check if the input move will lose the game
+        choice = 'q';
+    }
+
+    // TODO: only if ate apple, generate a new apple
+    if (mvCount%10==0){                          // generate an apple on the map
+        genApple(curwin);
+    }
+    
+    // TODO: only if ate apple, increase length
+    if (mvCount%10 == 0){                        // increase snake length
+        snakeLen++;
+    }
+
+    flushinp();                                 // flush all the input buffers (for continuous input control)
+
+    return choice;
+}
+
+void Snake::storeSnake(){
+    snake.push_back( std::vector<int>() );
+    int snakeSize = snake.size();
+    snake[snakeSize==0 ? 0 : snakeSize-1].push_back(xPos);
+    snake[snakeSize==0 ? 0 : snakeSize-1].push_back(yPos);
+}
+
+int Snake::checkValid(){                        // return false if invalid move
+    std::vector<int> currentLoc;
+    currentLoc.push_back(xPos);
+    currentLoc.push_back(yPos);
+    if ( std::find(snake.begin(), snake.end()-1, currentLoc) != snake.end()-1
+        || yPos<1 || yPos > yMax-2 ||
+        xPos<1 || xPos > xMax-3 )               // snake hit itself / hit the wall
+        return 0; //false
+    return 1;
 }

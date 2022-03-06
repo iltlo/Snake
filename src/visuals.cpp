@@ -1,7 +1,4 @@
-#include "visuals.h"
-#include <string>
-#include <vector>
-#include <ncurses.h>
+#include "visuals.hpp"
 
 void drawBorder(WINDOW * curwin){
     box(curwin, 35, 61);

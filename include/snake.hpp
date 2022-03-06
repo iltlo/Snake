@@ -2,9 +2,7 @@
 
 #include <ncurses.h>
 #include <vector>
-#include <algorithm>
-#include <iostream>
-#include "visuals.h"
+#include <string>
 
 class Snake{
     public:

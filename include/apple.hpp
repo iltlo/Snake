@@ -1,6 +1,5 @@
 #pragma once
 
-#include <ncurses.h>
-#include "visuals.h"
+#include "visuals.hpp"
 
 void genApple(WINDOW * win);

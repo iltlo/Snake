@@ -2,6 +2,7 @@
 
 #include <ncurses.h>
 #include <vector>
+#include <string>
 
 void showHead(WINDOW * curwin, int yPos, int xPos, std::string sHead);
 
