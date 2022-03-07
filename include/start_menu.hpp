@@ -1,6 +1,4 @@
 #pragma once
-#include <string>
-#include <ncurses.h>
 
 #define term_y 24
 #define term_x 80
@@ -14,16 +12,14 @@
 #define option_number 3
 
 #define bg_color COLOR_BLUE
-// #define COLOR_LIGHT_GREEN 2
-// #define COLOR_DARK_GREEN 2
-// #define COLOR_PINK 1
+#define COLOR_LIGHT_GREEN 2
+#define COLOR_DARK_GREEN 2
+#define COLOR_PINK 1
 
-// #define HIGHLIGHTS_COLOR_PAIR 13
-#define KEY_KEYBOARD_ENTER 10
-#define KEY_R 114
+#define HIGHLIGHTS_COLOR_PAIR 13
 
-char start_menu(WINDOW*&, WINDOW*&);
+char start_menu();
 void render_menu_pic(WINDOW*&);
 void render_option(const char&, WINDOW*&);
 
-extern const std::string menu_pic;
+#define KEYBOARD_KEY_ENTER 10
