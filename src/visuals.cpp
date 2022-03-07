@@ -2,11 +2,13 @@
 
 void drawBorder(WINDOW * curwin){
     
-    init_pair(15, COLOR_BLACK, COLOR_YELLOW);
+    // init_pair(15, COLOR_BLACK, COLOR_YELLOW);
 
-    wattron(curwin, 15);
+    // wattron(curwin, 15);
 
     box(curwin, 35, 61);
+
+    // wattroff(curwin, 15);
 
     wrefresh(stdscr);
     wrefresh(curwin);
@@ -21,6 +23,29 @@ void showHead(WINDOW * curwin, int yPos, int xPos, std::string sHead){          
 
     wattroff(curwin, COLOR_PAIR(12));
     wrefresh(curwin);
+}
+
+int oppoKey(int key){
+
+    if ( key == KEY_UP )
+        return KEY_DOWN;
+    if ( key == KEY_DOWN )
+        return KEY_UP;
+    if ( key == KEY_LEFT)
+        return KEY_RIGHT;
+    if ( key == KEY_RIGHT)
+        return KEY_LEFT;
+
+    if ( key == 'w' )
+        return 's';
+    if ( key == 's' )
+        return 'w';
+    if ( key == 'a' )
+        return 'd';
+    if ( key == 'd')
+        return 'a';
+    
+    return -1;
 }
 
 void keyChoice(WINDOW * curwin, int &yPos, int &xPos, std::string &sBody, int choice, int pause){
@@ -40,6 +65,7 @@ void keyChoice(WINDOW * curwin, int &yPos, int &xPos, std::string &sBody, int ch
 
     switch(choice){
 
+        case 'w':
         case KEY_UP:
 
             mvwaddstr(curwin, yPos, xPos, sBody.c_str());
@@ -50,6 +76,7 @@ void keyChoice(WINDOW * curwin, int &yPos, int &xPos, std::string &sBody, int ch
             yPos--;
             break;
 
+        case 's':
         case KEY_DOWN:
 
             mvwaddstr(curwin, yPos, xPos, sBody.c_str());
@@ -60,6 +87,7 @@ void keyChoice(WINDOW * curwin, int &yPos, int &xPos, std::string &sBody, int ch
             yPos++;
             break;
 
+        case 'a':
         case KEY_LEFT:
 
             mvwaddstr(curwin, yPos, xPos, sBody.c_str());
@@ -70,6 +98,7 @@ void keyChoice(WINDOW * curwin, int &yPos, int &xPos, std::string &sBody, int ch
             xPos=xPos-2;
             break;
 
+        case 'd':
         case KEY_RIGHT:
             mvwaddstr(curwin, yPos, xPos, sBody.c_str());
 

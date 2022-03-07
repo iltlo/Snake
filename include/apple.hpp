@@ -1,7 +1,8 @@
 #pragma once
 
 #include <ncurses.h>
+#include <array>
 
-void genApple(WINDOW * win);
+std::array<int, 2> genApple(WINDOW * win);
 
 void checkApple();
