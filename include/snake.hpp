@@ -1,13 +1,14 @@
 #pragma once
 
 #include <ncurses.h>
+#include <algorithm>
 #include <vector>
 #include <string>
 
 class Snake{
     
     public:
-        Snake(WINDOW * win, int y, int x);
+        Snake(WINDOW * win);
 
         int Move();
         void storeSnake();
@@ -19,14 +20,14 @@ class Snake{
         std::string get_sHead() { return sHead; }
         std::string get_sBody() { return sBody;}
         int get_speed() { return snakeSpeed; }
+        int get_appleState() { return appleState;};
+        int get_yApple() { return yApple; }
+        int get_xApple() { return xApple; }
 
-        // class Apple {
-        //     public:
-        //         void genApple(WINDOW * win);
-        //         void storeApple(int y, int x);
-        //         std::vector< std::vector<int> > applePos;
-                
-        // };
+        void set_yApple(int y) { yApple = y; }
+        void set_xApple(int x) { xApple = x; }
+        void set_appleState(int n) { appleState = n; }
+        void increment_snakeLen() { snakeLen++; }
 
     private:
         std::vector< std::vector<int> > snake;  // xy, storage of snake position
@@ -39,7 +40,7 @@ class Snake{
         std::string sBody ="[]";                // body char of the snake
 
         int COUNTDOWN=10;                       // count down before the snake will die, should be based on initial po <-> wall distance
-        int snakeSpeed=330;                     // usleep(snakeSpeed*1000)
+        int snakeSpeed=200;                     // usleep(snakeSpeed*1000)
         int appleState = 1;                     // 1: apple eaten
         int pause = 0;                          // default false
 

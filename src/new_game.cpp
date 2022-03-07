@@ -1,9 +1,17 @@
-#include <ncurses.h>
-#include <unistd.h>
-
-#include "snake.hpp"
-#include "visuals.hpp"
 #include "new_game.hpp"
+
+/*
+new game function
+
+what it does: 
+will be called when player opt for new game
+`new` keyword is used to allocate memory for Snake class object
+call for the main game loop
+
+inputs: none
+
+outputs: game window
+*/
 
 void new_game(){
 
@@ -17,13 +25,17 @@ void new_game(){
     int height=23, width=80, starty=1, startx=0;                // standardized window size to 80x24
     WINDOW * gamewin = newwin(height, width, starty, startx);
     
-    Snake * player = new Snake(gamewin, 1, 1);                  // initialized new class member: player
+    Snake * player = new Snake(gamewin);                  // initialized new class member: player
 
     drawBorder(gamewin);                                        // requires further decoration
     do {                                                        // print snake before getting the choice
         showHead(gamewin, player->get_yPos(), player->get_xPos(), player->get_sHead());
-        usleep( (player->get_speed())*1000 );
+        apple(* player, gamewin);
+        usleep( (player->get_speed())*1000 );                   // unistd.h
     } while (player->Move() != 'q');                            // MAIN PROGRAM LOOP
+
+    delete player;                                              // free the memory of the address in player pointer
+    player = 0;                                                 // stray pointer -> null pointer
 
     getch();
     endwin(); 

@@ -29,7 +29,7 @@ all: main
 snake.o: snake.cpp snake.hpp visuals.hpp
 	g++ ${FLAGS} -c $< ${INCLUDE}
 
-visuals.o: visuals.cpp visuals.hpp
+visuals.o: visuals.cpp visuals.hpp snake.hpp
 	g++ ${FLAGS} -c $< ${INCLUDE}
 
 new_game.o: new_game.cpp new_game.hpp snake.hpp visuals.hpp

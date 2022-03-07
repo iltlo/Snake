@@ -1,5 +1,16 @@
 #include "visuals.hpp"
 
+/*
+draw border function
+
+what it does:
+draw the border
+
+input: pointer to the specified window (game window)
+
+output: drawn border around the window
+*/
+
 void drawBorder(WINDOW * curwin){
     
     // init_pair(15, COLOR_BLACK, COLOR_YELLOW);
@@ -14,6 +25,18 @@ void drawBorder(WINDOW * curwin){
     wrefresh(curwin);
 }
 
+/*
+show head function
+
+what it does:
+will show the head of the snake
+coloured by using ncurses attribute
+
+input: pointer to the game window, coordinate and appearance of snake head
+
+output: shows snake head (as string)
+*/
+
 void showHead(WINDOW * curwin, int yPos, int xPos, std::string sHead){              // shows the head of the snake
 
     init_pair(12, COLOR_RED, COLOR_CYAN); // -1: terminal default color
@@ -24,6 +47,17 @@ void showHead(WINDOW * curwin, int yPos, int xPos, std::string sHead){          
     wattroff(curwin, COLOR_PAIR(12));
     wrefresh(curwin);
 }
+
+/*
+opposite key function
+
+what it does:
+return the opposite moving key
+
+input: key input
+
+output: mapped opposite keyvalue as return value
+*/
 
 int oppoKey(int key){
 
@@ -47,6 +81,19 @@ int oppoKey(int key){
     
     return -1;
 }
+
+/*
+key choice function
+
+what it does:
+response to user key input
+    1. spacebar pause
+    2. direction keys
+
+input: window pointer, coordinate and appearance of snake body, keyboard input, and pause state
+
+output: snake body
+*/
 
 void keyChoice(WINDOW * curwin, int &yPos, int &xPos, std::string &sBody, int choice, int pause){
     
@@ -113,6 +160,18 @@ void keyChoice(WINDOW * curwin, int &yPos, int &xPos, std::string &sBody, int ch
     }
 }
 
+/*
+cut snake function
+
+what it does:
+cuts the tail of the snake: first element in snake vector
+
+input: window pointer, snake vector
+
+output: blank space to cover the snake tail
+*/
+
+
 void cutSnake(WINDOW * curwin, std::vector< std::vector<int> > &snake){
 
     mvwaddstr(curwin, snake[0][1], snake[0][0], "  ");
@@ -121,8 +180,51 @@ void cutSnake(WINDOW * curwin, std::vector< std::vector<int> > &snake){
 
 }
 
+/*
+apple function
 
-// TODO: shall prevent the apple got generated on the snake body
+what it does:
+if snake ate apple,
+    1. generate a new apple
+    2. increase length and speed
+update apple coord and snake length as attribute
+
+input: window pointer, and "player" class object passed by pointer from new_game.cpp
+
+output: none
+*/
+
+void apple(Snake &p, WINDOW * curwin) {
+    if ( p.get_appleState() == 1 ){
+
+        std::array<int, 2> arr = { genApple(curwin) };
+
+        p.set_yApple(arr[0]);
+        p.set_xApple(arr[1]);
+
+        p.set_appleState(0);
+    }
+    
+    // TODO: increase speed
+    if ( p.get_yPos() == p.get_yApple() && p.get_xPos() == p.get_xApple() ) {
+        p.increment_snakeLen();
+
+        p.set_appleState(1);
+    }
+}
+
+/*
+gen apple function
+
+what it does:
+generate an apple on the window at a random coord
+ensured that the apple position is not covered by the snake
+
+input: window pointer
+
+output: red apple on the screen, array of the apple's int coordinate
+*/
+
 std::array<int, 2> genApple(WINDOW * win){
 
     init_pair(11, COLOR_RED, COLOR_MAGENTA);

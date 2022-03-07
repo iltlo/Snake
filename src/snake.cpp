@@ -1,18 +1,38 @@
-#include <algorithm>
-#include <iostream>
-
 #include "snake.hpp"
 #include "visuals.hpp"
 
-Snake::Snake(WINDOW * win, int y, int x){       // Snake class constructor
-    curwin = win; //current window
+/*
+default class constructor
+
+what it does:
+declare an object to the Snake class
+
+input: current window
+
+output: loading game message
+*/
+
+Snake::Snake(WINDOW * win){       // Snake class constructor
+    curwin = win;
     getmaxyx(curwin, yMax, xMax);
     yPos = yMax/2-1;
     xPos = xMax/2-1;
-    mvwprintw(stdscr, 0, 0, "gamewin xMax: %d yMax: %d", xMax, yMax);
+    mvwprintw(stdscr, 0, 0, "Preparing for new game ...");   // for debug
     keypad(curwin, true);
     curs_set(0);
 }
+
+/*
+move method
+
+what it does:
+main function loop of the game
+response to user key input
+
+input: user key input, and the member attribute
+
+output: none
+*/
 
 int Snake::Move(){
     
@@ -42,24 +62,22 @@ int Snake::Move(){
         choice = 'q';
     }
 
-    // TODO: only if ate apple, generate a new apple
-    if ( appleState == 1 ){                          // generate an apple on the map
-        std::array<int, 2> arr = { genApple(curwin) };
-        yApple = arr[0];
-        xApple = arr[1];
-        appleState = 0;
-    }
-    
-    // TODO: only if ate apple, increase length and speed
-    if (yPos == yApple && xPos == xApple){                        // increase snake length
-        snakeLen++;
-        appleState = 1;
-    }
-
     flushinp();                                 // flush all the input buffers (for continuous input control)
 
     return choice;
 }
+
+/*
+store snake method
+
+what it does:
+stores every coordinate of the snake to vector container
+updates snake size attribute
+
+input: current position of snake: xPos yPos
+
+output: none
+*/
 
 void Snake::storeSnake(){
     snake.push_back( std::vector<int>() );
@@ -68,13 +86,27 @@ void Snake::storeSnake(){
     snake[snakeSize==0 ? 0 : snakeSize-1].push_back(yPos);
 }
 
-int Snake::checkValid(){                        // return false if invalid move
+/*
+check valid move method
+
+what it does:
+check if the the move will end the game
+    1. Snake hit itself, or
+    2. Snake hit the wall
+return false if move is invalid, true if valid
+
+input: snake head position, snake body coordinate, window size
+
+output: none
+*/
+
+int Snake::checkValid(){
     std::vector<int> currentLoc;
     currentLoc.push_back(xPos);
     currentLoc.push_back(yPos);
     if ( std::find(snake.begin(), snake.end()-1, currentLoc) != snake.end()-1
         || yPos<1 || yPos > yMax-2 ||
-        xPos<1 || xPos > xMax-3 )               // snake hit itself / hit the wall
+        xPos<1 || xPos > xMax-3 )
         return 0; //false
     return 1;
 }
