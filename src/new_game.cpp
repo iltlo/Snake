@@ -16,6 +16,7 @@ void new_game(){
     // int height=yMax-1, width=((xMax)%2==0 ? xMax-2 : xMax-1), starty=1, startx=1;        // dimension of play window
     int height=23, width=80, starty=1, startx=0;                // standardized window size to 80x24
     WINDOW * gamewin = newwin(height, width, starty, startx);
+    
     Snake * player = new Snake(gamewin, 1, 1);                  // initialized new class member: player
 
     drawBorder(gamewin);                                        // requires further decoration
