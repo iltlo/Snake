@@ -3,7 +3,6 @@
 
 #include "snake.hpp"
 #include "visuals.hpp"
-#include "apple.hpp"                              // genApple()
 
 Snake::Snake(WINDOW * win, int y, int x){       // Snake class constructor
     curwin = win; //current window

@@ -26,10 +26,7 @@ all: main
 
 #######################################
 
-snake.o: snake.cpp snake.hpp visuals.hpp apple.hpp
-	g++ ${FLAGS} -c $< ${INCLUDE}
-
-apple.o: apple.cpp apple.hpp
+snake.o: snake.cpp snake.hpp visuals.hpp
 	g++ ${FLAGS} -c $< ${INCLUDE}
 
 visuals.o: visuals.cpp visuals.hpp
@@ -46,7 +43,7 @@ main.o: main.cpp start_menu.hpp new_game.hpp
 
 #########################################
 
-main: main.o start_menu.o new_game.o snake.o apple.o visuals.o
+main: main.o start_menu.o new_game.o snake.o visuals.o
 	g++ $(FLAGS) $^ ${LIB} -o $@
 
 clean:
