@@ -27,6 +27,11 @@ void new_game(){
     
     Snake * player = new Snake(gamewin);                  // initialized new class member: player
 
+    // *******
+    // wprintw(stdscr, "%d %d",(chtype)(unsigned char)((player->get_sHead())[0]),(chtype)(unsigned char)(player->get_sBody()[0]) );     //for debug
+    // wgetch(stdscr);
+    // *******
+
     drawBorder(gamewin);                                        // requires further decoration
     do {                                                        // print snake before getting the choice
         showHead(gamewin, player->get_yPos(), player->get_xPos(), player->get_sHead());

@@ -44,6 +44,12 @@ void showHead(WINDOW * curwin, int yPos, int xPos, std::string sHead){          
 
     mvwaddstr(curwin, yPos, xPos, sHead.c_str());
 
+    // // *******
+    // chtype ch = mvwinch(curwin, yPos, xPos);
+    // mvwprintw(stdscr, 0, 0, "Head ch: %d   ", ch);   // for debug to find chtype of head
+    // wrefresh(stdscr);
+    // // *******
+
     wattroff(curwin, COLOR_PAIR(12));
     wrefresh(curwin);
 }
@@ -195,22 +201,28 @@ output: none
 */
 
 void apple(Snake &p, WINDOW * curwin) {
+    // TODO: increase speed
+    if ( p.get_yPos() == p.get_yApple() && p.get_xPos() == p.get_xApple() ) {
+        p.increment_snakeLen();
+
+        p.set_appleState(1);
+
+        return;
+    }
+
     if ( p.get_appleState() == 1 ){
 
-        std::array<int, 2> arr = { genApple(curwin) };
+        std::array<int, 2> arr = { genApple(p, curwin, 1) };
 
         p.set_yApple(arr[0]);
         p.set_xApple(arr[1]);
 
         p.set_appleState(0);
     }
-    
-    // TODO: increase speed
-    if ( p.get_yPos() == p.get_yApple() && p.get_xPos() == p.get_xApple() ) {
-        p.increment_snakeLen();
-
-        p.set_appleState(1);
+    else {
+        genApple(p, curwin, 0);
     }
+    
 }
 
 /*
@@ -225,28 +237,36 @@ input: window pointer
 output: red apple on the screen, array of the apple's int coordinate
 */
 
-std::array<int, 2> genApple(WINDOW * win){
+std::array<int, 2> genApple(Snake &p, WINDOW * win, int appleState){
 
     init_pair(11, COLOR_RED, COLOR_MAGENTA);
     std::string apple = "()";
-    int yApple, xApple, ch;
+    int yApple, xApple;
+    chtype ch;
 
-    std::random_device rd;
-    std::mt19937 generator(rd());
-    std::uniform_int_distribution<int> unif(1, 819);
-    // printw("Min: %d Max: %d", generator.min(), generator.max());
+    if (appleState == 1) {
 
-    int applePos = unif(generator);
-    do {
-        yApple = applePos/40+1;
-        xApple = ( (xApple=(applePos%39)*2-1)==-1 ? 77 : xApple ) ;     //xApple: (applePos%39)*2-1),  == -1 indicates: y-index = 77
-        ch = mvwinch(win, yApple, xApple);
-        // *******
-        mvwprintw(stdscr, 0, 0, "yApple: %d xApple: %d ch: %c   ", yApple, xApple, ch);   // for debug
-        wrefresh(stdscr);
-        // *******
-    } while ( ch == apple[0] || ch == '0' || ch == '[' );               // TODO: use class member sHead sBody
+        std::random_device rd;
+        std::mt19937 generator(rd());
+        std::uniform_int_distribution<int> unif(1, 819);
+        // printw("Min: %d Max: %d", generator.min(), generator.max());
+
+        do {
+            int applePos = unif(generator);
+            yApple = applePos/40+1;
+            xApple = ( (xApple=(applePos%39)*2-1)==-1 ? 77 : xApple ) ;     //xApple: (applePos%39)*2-1),  == -1 indicates: y-index = 77
+            ch = mvwinch(win, yApple, xApple);
+            // *******
+            // mvwprintw(stdscr, 0, 0, "yApple: %d xApple: %d ch: %d   ", yApple, xApple, ch);   // for debug
+            // wrefresh(stdscr);
+            // *******
+        } while ( ch == 3120 || ch == 3675 );               // 3120: chtype of highlighted sHead[0], 3675: sBody[0]
     // printw("applePos: %d x-y: %d %d", applePos, xApple, yApple);
+    }
+    else {
+        yApple = p.get_yApple();
+        xApple = p.get_xApple();
+    }
 
     wattron(win, COLOR_PAIR(11));
     // wattron(win, A_BLINK);

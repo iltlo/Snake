@@ -20,5 +20,5 @@ void cutSnake(WINDOW * curwin, std::vector< std::vector<int> > &snake);
 
 void apple(Snake &player, WINDOW * curwin);
 
-std::array<int, 2> genApple(WINDOW * win);
+std::array<int, 2> genApple(Snake &player, WINDOW * win, int appleState);
 

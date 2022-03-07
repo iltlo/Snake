@@ -40,7 +40,7 @@ class Snake{
         std::string sBody ="[]";                // body char of the snake
 
         int COUNTDOWN=10;                       // count down before the snake will die, should be based on initial po <-> wall distance
-        int snakeSpeed=200;                     // usleep(snakeSpeed*1000)
+        int snakeSpeed=330;                     // usleep(snakeSpeed*1000)
         int appleState = 1;                     // 1: apple eaten
         int pause = 0;                          // default false
 
