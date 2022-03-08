@@ -12,8 +12,6 @@ output: drawn border around the window
 */
 
 void drawBorder(WINDOW * curwin){
-    
-    // init_pair(15, COLOR_BLACK, COLOR_YELLOW);
 
     // wattron(curwin, 15);
 
@@ -39,7 +37,6 @@ output: shows snake head (as string)
 
 void showHead(WINDOW * curwin, int yPos, int xPos, std::string sHead){              // shows the head of the snake
 
-    init_pair(12, COLOR_RED, COLOR_CYAN); // -1: terminal default color
     wattron(curwin, COLOR_PAIR(12));
 
     mvwaddstr(curwin, yPos, xPos, sHead.c_str());
@@ -102,8 +99,6 @@ output: snake body
 */
 
 void keyChoice(WINDOW * curwin, int &yPos, int &xPos, std::string &sBody, int choice, int pause){
-    
-    init_pair(14, COLOR_CYAN, COLOR_GREEN);
 
     wattron(curwin, COLOR_PAIR(14));
 
@@ -239,7 +234,6 @@ output: red apple on the screen, array of the apple's int coordinate
 
 std::array<int, 2> genApple(Snake &p, WINDOW * win, int appleState){
 
-    init_pair(11, COLOR_RED, COLOR_MAGENTA);
     std::string apple = "()";
     int yApple, xApple;
     chtype ch;
@@ -271,7 +265,7 @@ std::array<int, 2> genApple(Snake &p, WINDOW * win, int appleState){
     wattron(win, COLOR_PAIR(11));
     // wattron(win, A_BLINK);
 
-    mvwprintw(win, yApple, xApple, apple.c_str());
+    mvwprintw(win, yApple, xApple, "%s", apple.c_str());
     wattroff(win, COLOR_PAIR(11));
     // wattroff(win, A_BLINK);
     

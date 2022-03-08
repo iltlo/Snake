@@ -1,30 +1,10 @@
-FLAGS = -pedantic-errors -std=c++11
-LIB = -lcurses
+FLAGS = -pedantic-errors -std=c++11 -I ~/ncurses_files/include -I ~/ncurses_files/include/ncurses
+LIB = -lncurses -L ~/ncurses_files/lib
 vpath %.cpp src
 vpath %.hpp include
 INCLUDE = -I ./include
 
-all: main
-
-# snake.cpp:
-# 	g++ ${FLAGS} -c $< ${INCLUDE}
-
-# apple.cpp:
-# 	g++ ${FLAGS} -c $< ${INCLUDE}
-
-# visuals.cpp:
-# 	g++ ${FLAGS} -c $< ${INCLUDE}
-
-# new_game.cpp:
-# 	g++ ${FLAGS} -c $< ${INCLUDE}
-
-# start_menu.cpp:
-# 	g++ ${FLAGS} -c $< ${INCLUDE}
-
-# main.cpp:
-# 	g++ ${FLAGS} -c $< ${INCLUDE}
-
-#######################################
+all: ncurses main
 
 snake.o: snake.cpp snake.hpp visuals.hpp
 	g++ ${FLAGS} -c $< ${INCLUDE}
@@ -46,7 +26,12 @@ main.o: main.cpp start_menu.hpp new_game.hpp
 main: main.o start_menu.o new_game.o snake.o visuals.o
 	g++ $(FLAGS) $^ ${LIB} -o $@
 
+ncurses: FORCE
+	@chmod u+x get_curses.sh
+	@./get_curses.sh
+FORCE: 
+
 clean:
-	rm *.o -f main
+	rm -f *.o main
 
 .PHONY: clean

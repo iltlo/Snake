@@ -44,7 +44,7 @@ int Snake::Move(){
     if (choice == previous) choice = -1;
 
     // *******
-    mvwprintw(stdscr, 0, 0, "count: %d choice: %d SnkLen: %d VecLen: %d  ", mvCount, choice, snakeLen, snake.size());   // for debug
+    mvwprintw(stdscr, 0, 0, "count: %d choice: %d SnkLen: %d VecLen: %lu  ", mvCount, choice, snakeLen, snake.size());   // for debug
     wrefresh(stdscr);
     // *******
     if ( choice == ' ' ) pause = 1;               // pasue state turns true (menu bar will pop out)

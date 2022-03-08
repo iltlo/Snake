@@ -15,13 +15,11 @@ outputs: game window
 
 void new_game(){
 
-    int yMax, xMax;
-    getmaxyx(stdscr, yMax, xMax);                               // get screen size
+    init_pair(11, COLOR_RED, COLOR_MAGENTA);                    // genApple
+    init_pair(12, COLOR_RED, COLOR_CYAN);                       // showHead
+    init_pair(14, COLOR_CYAN, COLOR_GREEN);                     // keyChoice (snake body)
+    init_pair(15, COLOR_BLACK, COLOR_YELLOW);                   // drawBorder
 
-    // initialize a play window
-    move(0,0);
-    clrtoeol();
-    // int height=yMax-1, width=((xMax)%2==0 ? xMax-2 : xMax-1), starty=1, startx=1;        // dimension of play window
     int height=23, width=80, starty=1, startx=0;                // standardized window size to 80x24
     WINDOW * gamewin = newwin(height, width, starty, startx);
     
@@ -32,7 +30,8 @@ void new_game(){
     // wgetch(stdscr);
     // *******
 
-    drawBorder(gamewin);                                        // requires further decoration
+    drawBorder(gamewin);                                        // TODO: requires further decoration
+
     do {                                                        // print snake before getting the choice
         showHead(gamewin, player->get_yPos(), player->get_xPos(), player->get_sHead());
         apple(* player, gamewin);
