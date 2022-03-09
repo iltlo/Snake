@@ -1,7 +1,7 @@
 #include "start_menu.hpp"
 
 const std::string menu_pic = 
-R"(J                 &&&&&&&&&&&&&&&&&&&&&&&&                            )"
+R"(                  &&&&&&&&&&&&&&&&&&&&&&&&                            )"
 R"(            &&&&&(((((((((((((((((((((((&&&&&                         )"
 R"(            &&&&&(((((((((((((((((((((((&&&&&                         )"
 R"(            &&&&&((((((((((((((((((((((((((((&&&&&                    )"
@@ -32,7 +32,8 @@ R"(          &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&        &&&&&&    )"
 // concatenating the raw string literals into one big array, 
 // thus speeding up the loading time in game
 // (due to reading adjacent memory address and putting them into the same cache line)
-// also putting it as initialized global constants to avoid repeated deletion and creation of string literals on stack whenever reloading start menu
+// also putting it as an initialized global constants to avoid repeated
+// deletion and creation of string literals on stack whenever reloading start menu
 
 
 /* 
@@ -63,16 +64,18 @@ char start_menu(WINDOW*& menu_pic_win, WINDOW*& option_win)
         switch(wgetch(option_win)) // waiting for player's input at here
         {
             case(KEY_UP):
+            case('w'):
                 if (choice > 0)
                     choice--;
                 break;
 
             case(KEY_DOWN):
+            case('s'):
                 if (choice < 2)
                     choice++;
                 break;
             
-            case(KEY_KEYBOARD_ENTER):
+            case(KEY_KEYBOARD_ENTER): // hitting enter will confirm the choice chosen in the option window
                 n_chosen = false;
                 break;
 
@@ -86,14 +89,6 @@ char start_menu(WINDOW*& menu_pic_win, WINDOW*& option_win)
         }
         render_option(choice, option_win);
     }
-
-    // closing start menu 
-    werase(menu_pic_win);
-    werase(option_win);
-    wrefresh(menu_pic_win);
-    wrefresh(option_win);
-    delwin(menu_pic_win);
-    delwin(option_win);
 
     return choice; // to the main loop
 }
@@ -204,7 +199,7 @@ void render_option(const char& choice, WINDOW*& option_win){
     // initialization
     werase(option_win);
     box(option_win, 0, 0);
-    const char* temp[option_number] = {"NEW GAME\0", "OPTION\0", "EXIT\0"};
+    const char* options[option_number] = {"NEW GAME\0", "OPTION\0", "EXIT\0"};
 
     // adding strings at the designated position,
     // highlighting the option when currently chosen
@@ -212,12 +207,32 @@ void render_option(const char& choice, WINDOW*& option_win){
 
         if (choice == i){
             wattron(option_win, A_STANDOUT);
-            mvwaddstr(option_win, (i+1) * 5, 1, temp[i]);
+            mvwaddstr(option_win, (i+1) * 5, 1, options[i]);
             wattroff(option_win, A_STANDOUT);
         }
         else{
-            mvwaddstr(option_win, (i+1) * 5, 1, temp[i]);
+            mvwaddstr(option_win, (i+1) * 5, 1, options[i]);
         }
     }
     wrefresh(option_win);
+}
+
+/* 
+closing_start_menu function
+
+what it does:
+delete and close the start menu
+
+inputs: two WINDOW pointer for menu picture and option window
+
+outputs: none
+*/
+void closing_start_menu(WINDOW*& menu_pic_win, WINDOW*& option_win){
+    // closing start menu 
+    werase(menu_pic_win);
+    werase(option_win);
+    wrefresh(menu_pic_win);
+    wrefresh(option_win);
+    delwin(menu_pic_win);
+    delwin(option_win);
 }

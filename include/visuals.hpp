@@ -10,7 +10,7 @@
 
 void showHead(WINDOW * curwin, int yPos, int xPos, std::string sHead);
 
-void drawBorder(WINDOW * curwin);
+void drawBorder(WINDOW *& curwin);
 
 int oppoKey(int key);
 

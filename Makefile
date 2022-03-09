@@ -21,9 +21,12 @@ start_menu.o: start_menu.cpp start_menu.hpp
 main.o: main.cpp start_menu.hpp new_game.hpp
 	g++ ${FLAGS} -c $< ${INCLUDE}
 
+pause_menu.o: pause_menu.cpp pause_menu.hpp
+	g++ ${FLAGS} -c $< ${INCLUDE}
+
 #########################################
 
-main: main.o start_menu.o new_game.o snake.o visuals.o
+main: main.o start_menu.o new_game.o snake.o visuals.o pause_menu.o
 	g++ $(FLAGS) $^ ${LIB} -o $@
 
 ncurses: FORCE

@@ -1,4 +1,5 @@
 #include "visuals.hpp"
+#include "pause_menu.hpp"
 
 /*
 draw border function
@@ -11,11 +12,15 @@ input: pointer to the specified window (game window)
 output: drawn border around the window
 */
 
-void drawBorder(WINDOW * curwin){
+void drawBorder(WINDOW *& curwin){
 
+    init_pair( 1, COLOR_BLACK, COLOR_YELLOW);
+    chtype fence_lr = '#' | A_BOLD | A_STANDOUT | COLOR_PAIR(1);
+    chtype fence_ud = 'X' | A_BOLD | A_STANDOUT | COLOR_PAIR(1);
+    chtype fence_corner = 'X' | A_BOLD | A_STANDOUT | COLOR_PAIR(1);
     // wattron(curwin, 15);
 
-    box(curwin, 35, 61);
+    wborder(curwin, fence_lr, fence_lr,fence_ud,fence_ud,fence_corner,fence_corner,fence_corner,fence_corner);
 
     // wattroff(curwin, 15);
 
@@ -103,12 +108,8 @@ void keyChoice(WINDOW * curwin, int &yPos, int &xPos, std::string &sBody, int ch
     wattron(curwin, COLOR_PAIR(14));
 
     if (pause == 1){
-        while (true) {
-            // menu function ...
-            // menu function ... 
-            // menu function ... 
-            break;
-        }
+        pause_menu();
+        wrefresh(curwin);
     }
 
     switch(choice){

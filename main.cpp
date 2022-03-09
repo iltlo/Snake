@@ -23,14 +23,16 @@ int main()
         switch(start_menu(menu_pic_win, option_win))
         {
             case(s_new_game):
-            new_game();
-            break;
+                closing_start_menu(menu_pic_win, option_win);
+                new_game();
+                break;
 
             // case(s_option):
-            //     option();
+            //     option(option_win);
             //     break;
 
             case(s_exit_game):
+                closing_start_menu(menu_pic_win, option_win);
                 n_exit_game = false;
                 curs_set(1);
                 break;
