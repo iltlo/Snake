@@ -109,7 +109,8 @@ void keyChoice(WINDOW * curwin, int &yPos, int &xPos, std::string &sBody, int ch
 
     if (pause == 1){
         pause_menu();
-        wrefresh(curwin);
+        // wrefresh(stdscr);
+        // wrefresh(curwin);
     }
 
     switch(choice){
