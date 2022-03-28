@@ -51,7 +51,7 @@ int Snake::Move(){
 
     if ( choice == -1 || previous == oppoKey(choice) || pause == 1 ) choice = previous;    // continue the same path if no input (-1)
 
-    keyChoice(curwin, yPos, xPos, sBody, choice, pause); 
+    keyChoice(curwin, yPos, xPos, sBody, snake, choice, pause); 
     pause = 0;
 
     if (mvCount>=snakeLen && snake.size()%snakeLen==0) cutSnake(curwin, snake);     // cut the snake tail

@@ -10,11 +10,13 @@
 
 void showHead(WINDOW * curwin, int yPos, int xPos, std::string sHead);
 
+void showBody(WINDOW * curwin, std::vector< std::vector<int> > &snake, std::string &sBody);
+
 void drawBorder(WINDOW *& curwin);
 
 int oppoKey(int key);
 
-void keyChoice(WINDOW * curwin, int &yPos, int &xPos, std::string &sBody, int choice, int pause);
+void keyChoice(WINDOW * curwin, int &yPos, int &xPos, std::string &sBody, std::vector< std::vector<int> > &snake, int choice, int pause);
 
 void cutSnake(WINDOW * curwin, std::vector< std::vector<int> > &snake);
 

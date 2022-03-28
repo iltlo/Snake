@@ -57,6 +57,29 @@ void showHead(WINDOW * curwin, int yPos, int xPos, std::string sHead){          
 }
 
 /*
+show body function
+
+what it does:
+will refresh the body of the snake
+prevents the snake disappering after calling the pause menu
+
+input: pointer to the game window, coordinate vector and appearance of snake head
+
+output: refreshes the whole snake
+*/
+
+void showBody(WINDOW * curwin, std::vector< std::vector<int> > &snake, std::string &sBody){
+    // wattron(curwin, COLOR_PAIR(14));
+
+    for (int i=0; i<snake.size()-1; i++){ // the snake head does not need to refresh
+            mvwaddstr(curwin, snake[i][1], snake[i][0], sBody.c_str()); // snake is stored in x-y
+    }
+
+    // wattroff(curwin, COLOR_PAIR(14));
+    // wrefresh(curwin);
+}
+
+/*
 opposite key function
 
 what it does:
@@ -103,12 +126,14 @@ input: window pointer, coordinate and appearance of snake body, keyboard input, 
 output: snake body
 */
 
-void keyChoice(WINDOW * curwin, int &yPos, int &xPos, std::string &sBody, int choice, int pause){
+void keyChoice(WINDOW * curwin, int &yPos, int &xPos, std::string &sBody, std::vector< std::vector<int> > &snake, int choice, int pause){
 
     wattron(curwin, COLOR_PAIR(14));
 
     if (pause == 1){
         pause_menu();
+        
+        showBody(curwin, snake, sBody); // refresh the snake body once
         // wrefresh(stdscr);
         // wrefresh(curwin);
     }

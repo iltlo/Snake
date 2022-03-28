@@ -1,4 +1,3 @@
-#include <ncurses.h>
 #include "pause_menu.hpp"
 
 /*
