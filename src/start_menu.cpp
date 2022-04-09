@@ -199,7 +199,7 @@ void render_option(const char& choice, WINDOW*& option_win){
     // initialization
     werase(option_win);
     box(option_win, 0, 0);
-    const char* options[option_number] = {"NEW GAME\0", "OPTION\0", "EXIT\0"};
+    const char* options[option_number] = {"NEW GAME\0", "LOAD\0", "EXIT\0"};
 
     // adding strings at the designated position,
     // highlighting the option when currently chosen

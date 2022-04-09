@@ -88,7 +88,7 @@ void render_pause_menu(char choice, WINDOW*& pause_menu_win){
     
     werase(pause_menu_win);
     box(pause_menu_win, 0, 0);
-    const char* options[pause_menu_option_number] = {"SAVE GAME AND EXIT\0", "EXIT\0"};
+    const char* options[pause_menu_option_number] = {"CONTINUE\0", "SAVE GAME AND EXIT\0"};
 
     for (char i = 0; i < pause_menu_option_number; i++){
 

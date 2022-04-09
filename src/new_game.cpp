@@ -35,8 +35,9 @@ void new_game(){
     do {                                                        // print snake before getting the choice
         showHead(gamewin, player->get_yPos(), player->get_xPos(), player->get_sHead());
         apple(* player, gamewin);
+        mvwprintw(stdscr, 0, 0, "Your Score: \t %d", player->get_score());
         usleep( (player->get_speed())*1000 );                   // unistd.h
-    } while (player->Move() != 'q');                            // MAIN PROGRAM LOOP
+    } while (player->Move() == true);                            // MAIN PROGRAM LOOP
 
     delete player;                                              // free the memory of the address in player pointer
     player = 0;                                                 // stray pointer -> null pointer

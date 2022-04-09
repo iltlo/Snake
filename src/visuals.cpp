@@ -126,16 +126,15 @@ input: window pointer, coordinate and appearance of snake body, keyboard input, 
 output: snake body
 */
 
-void keyChoice(WINDOW * curwin, int &yPos, int &xPos, std::string &sBody, std::vector< std::vector<int> > &snake, int choice, int pause){
+void keyChoice(WINDOW * curwin, int &yPos, int &xPos, std::string &sBody, std::vector< std::vector<int> > &snake, int choice, int &pause){
 
     wattron(curwin, COLOR_PAIR(14));
 
-    if (pause == 1){
+    if (pause == true){
         pause_menu();
-        
+        pause = false; // continue
+
         showBody(curwin, snake, sBody); // refresh the snake body once
-        // wrefresh(stdscr);
-        // wrefresh(curwin);
     }
 
     switch(choice){
@@ -227,7 +226,7 @@ void apple(Snake &p, WINDOW * curwin) {
     if ( p.get_yPos() == p.get_yApple() && p.get_xPos() == p.get_xApple() ) {
         p.increment_snakeLen();
 
-        p.set_appleState(1);
+        p.set_appleState(true);
 
         return;
     }
@@ -239,7 +238,7 @@ void apple(Snake &p, WINDOW * curwin) {
         p.set_yApple(arr[0]);
         p.set_xApple(arr[1]);
 
-        p.set_appleState(0);
+        p.set_appleState(false);
     }
     else {
         genApple(p, curwin, 0);
@@ -259,13 +258,13 @@ input: window pointer
 output: red apple on the screen, array of the apple's int coordinate
 */
 
-std::array<int, 2> genApple(Snake &p, WINDOW * win, int appleState){
+std::array<int, 2> genApple(Snake &p, WINDOW * win, bool appleEaten){
 
     std::string apple = "()";
     int yApple, xApple;
     chtype ch;
 
-    if (appleState == 1) {
+    if (appleEaten == true) {
 
         std::random_device rd;
         std::mt19937 generator(rd());
