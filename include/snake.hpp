@@ -32,6 +32,8 @@ class Snake{
         void set_appleState(bool n) { appleEaten = n; }
         void increment_snakeLen() { snakeLen++; }
 
+        bool exitFlag = false;
+
     private:
         std::vector< std::vector<int> > snake;  // xy, storage of snake position
         int xPos, yPos, xMax, yMax;             // Pos: head of the snake Max: game window size
@@ -43,7 +45,6 @@ class Snake{
         std::string sHead = "00";               // head char of the snake
         std::string sBody = "[]";                // body char of the snake
 
-        int COUNTDOWN = 10;                       // count down before the snake will die, should be based on initial po <-> wall distance
         int snakeSpeed = 150;                     // usleep(snakeSpeed*1000)
         bool appleEaten = true;
         int pause = false;

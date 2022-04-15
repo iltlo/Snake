@@ -126,14 +126,15 @@ input: window pointer, coordinate and appearance of snake body, keyboard input, 
 output: snake body
 */
 
-void keyChoice(WINDOW * curwin, int &yPos, int &xPos, std::string &sBody, std::vector< std::vector<int> > &snake, int choice, int &pause){
+void keyChoice(WINDOW * curwin, int &yPos, int &xPos, std::string &sBody, 
+                std::vector< std::vector<int> > &snake, int choice, int &pause, bool &exitFlag) {
 
     wattron(curwin, COLOR_PAIR(14));
 
     if (pause == true){
-        pause_menu();
-        pause = false; // continue
+        pause_menu(exitFlag);
 
+        pause = false; // continue
         showBody(curwin, snake, sBody); // refresh the snake body once
     }
 

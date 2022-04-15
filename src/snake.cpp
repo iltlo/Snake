@@ -51,15 +51,15 @@ bool Snake::Move(){
     if ( choice == previous ) choice = -1;
     if ( isSame_MvDirection(choice) ) choice = previous;    // continue the same path if no input (-1)
 
-    keyChoice(curwin, yPos, xPos, sBody, snake, choice, pause);
+    keyChoice(curwin, yPos, xPos, sBody, snake, choice, pause, exitFlag);
 
-    if (mvCount>=snakeLen && snake.size()%snakeLen==0) cutSnake(curwin, snake);     // cut the snake tail
+    if ( mvCount >= snakeLen && snake.size()%snakeLen == 0 ) cutSnake(curwin, snake);     // cut the snake tail
     previous = choice;
     mvCount++;
 
     flushinp();                                 // flush all the input buffers (for continuous input control)
 
-    if (!isValidMove() && mvCount>COUNTDOWN)    // check if the input move will lose the game
+    if ( !isValidMove() )    // check if the input move will lose the game
         return false;
     else    
         return true;
@@ -104,7 +104,8 @@ bool Snake::isValidMove(){
     currentLoc.push_back(yPos);
     if ( std::find(snake.begin(), snake.end()-1, currentLoc) != snake.end()-1
             || yPos<1 || yPos > yMax-2
-            || xPos<1 || xPos > xMax-3 )
+            || xPos<1 || xPos > xMax-3 
+            || exitFlag )
         return false; //move is invalid
     return true;
 }

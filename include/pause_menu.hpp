@@ -11,5 +11,5 @@
 #define KEY_KEYBOARD_ENTER 10
 #define KEY_R 114
 
-void pause_menu();
+void pause_menu(bool &exitFlag);
 void render_pause_menu(char, WINDOW*&);

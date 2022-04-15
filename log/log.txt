@@ -1,1 +1,7 @@
-// leaderboard
+      ===  LEADERBOARD  ===
+SCORE |                        DATE
+   26 |    Fri Apr 15 22:58:13 2022
+    5 |    Fri Apr 15 22:54:31 2022
+    2 |    Fri Apr 15 23:55:48 2022
+    1 |    Sat Apr 16 01:14:36 2022
+    0 |    Fri Apr 15 22:52:15 2022

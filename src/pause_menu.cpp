@@ -11,7 +11,7 @@ input:none
 
 output: none
 */
-void pause_menu(){
+void pause_menu(bool &exitFlag) {
     WINDOW* pause_menu_win = newwin(pause_menu_y, pause_menu_x, pause_menu_pos_y, pause_menu_pos_x);
     curs_set(0);
 
@@ -51,13 +51,9 @@ void pause_menu(){
         render_pause_menu(choice, pause_menu_win);
     }
 
-    // do stuff according to pause menu's choices
-    // switch (choice){
-    //     case(save_and_exit):
-    //         ...
-    //     case(exit):
-    //         ...
-    // }
+    if (choice == 1){
+        exitFlag = true;
+    }
     
     // end pause menu
     werase(pause_menu_win);

@@ -12,7 +12,10 @@ snake.o: snake.cpp snake.hpp visuals.hpp
 visuals.o: visuals.cpp visuals.hpp snake.hpp
 	g++ ${FLAGS} -c $< ${INCLUDE}
 
-new_game.o: new_game.cpp new_game.hpp snake.hpp visuals.hpp
+save_and_load.o: save_and_load.cpp save_and_load.hpp
+	g++ ${FLAGS} -c $< ${INCLUDE}
+
+new_game.o: new_game.cpp new_game.hpp snake.hpp visuals.hpp save_and_load.hpp
 	g++ ${FLAGS} -c $< ${INCLUDE}
 
 start_menu.o: start_menu.cpp start_menu.hpp
@@ -26,7 +29,7 @@ pause_menu.o: pause_menu.cpp pause_menu.hpp
 
 #########################################
 
-main: main.o start_menu.o new_game.o snake.o visuals.o pause_menu.o
+main: main.o start_menu.o new_game.o save_and_load.o snake.o visuals.o pause_menu.o
 	g++ $(FLAGS) $^ ${LIB} -o $@
 
 ncurses: FORCE

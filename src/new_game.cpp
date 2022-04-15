@@ -24,6 +24,7 @@ void new_game(){
     WINDOW * gamewin = newwin(height, width, starty, startx);
     
     Snake * player = new Snake(gamewin);                  // initialized new class member: player
+    SaveAndLoad * sl = new SaveAndLoad("./log/log.txt");                 // initialized new class member: saveload
 
     // *******
     // wprintw(stdscr, "%d %d",(chtype)(unsigned char)((player->get_sHead())[0]),(chtype)(unsigned char)(player->get_sBody()[0]) );     //for debug
@@ -39,9 +40,16 @@ void new_game(){
         usleep( (player->get_speed())*1000 );                   // unistd.h
     } while (player->Move() == true);                            // MAIN PROGRAM LOOP
 
-    delete player;                                              // free the memory of the address in player pointer
+    // only store game and required key confirm to exit, if the game is over
+    if (!player->exitFlag) {
+        sl->saveScore(player->get_score());                         // save score to file
+        getch();
+    }
+
+    delete player;                                              // free the memory of the address in pointer
+    delete sl;
+
     player = 0;                                                 // stray pointer -> null pointer
 
-    getch();
     endwin(); 
 }
