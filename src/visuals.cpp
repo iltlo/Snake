@@ -33,6 +33,7 @@ show head function
 what it does:
 will show the head of the snake
 coloured by using ncurses attribute
+overloaded to distringuish between game over or not
 
 input: pointer to the game window, coordinate and appearance of snake head
 
@@ -45,11 +46,17 @@ void showHead(WINDOW * curwin, int yPos, int xPos, std::string sHead){          
 
     mvwaddstr(curwin, yPos, xPos, sHead.c_str());
 
-    // // *******
-    // chtype ch = mvwinch(curwin, yPos, xPos);
-    // mvwprintw(stdscr, 0, 0, "Head ch: %d   ", ch);   // for debug to find chtype of head
-    // wrefresh(stdscr);
-    // // *******
+    wattroff(curwin, COLOR_PAIR(12));
+    wrefresh(curwin);
+}
+void showHead(WINDOW * curwin, std::vector< std::vector<int> > &snake, std::string sHead){    // shows the head of the snake after game over
+
+    wattron(curwin, COLOR_PAIR(12));
+    int snakeSize = snake.size();
+    int xPos = snake[snakeSize-1][0];
+    int yPos = snake[snakeSize-1][1];
+
+    mvwaddstr(curwin, yPos, xPos, sHead.c_str());
 
     wattroff(curwin, COLOR_PAIR(12));
     wrefresh(curwin);
@@ -107,15 +114,18 @@ int oppoKey(int key){
 key choice function
 
 what it does:
-response to user key input and move the snake
+response to user key input and refresh the snake body
 
-input: window pointer, coordinate and appearance of snake body, keyboard input, and pause state
+input: window pointer, coordinate and appearance of snake body, keyboard input
 
 output: snake body
 */
 
-void moveChoice(WINDOW * curwin, int &yPos, int &xPos, std::string &sBody, 
-                std::vector< std::vector<int> > &snake, int choice, bool &exitFlag) {
+void moveChoice(WINDOW * curwin, std::string &sBody, std::vector< std::vector<int> > &snake, int choice) {
+    
+    int snakeSize = snake.size();
+    int xPos = snake[snakeSize<=1 ? 0 : snakeSize-1][0];
+    int yPos = snake[snakeSize<=1 ? 0 : snakeSize-1][1];
 
     wattron(curwin, COLOR_PAIR(14));
 
@@ -127,7 +137,6 @@ void moveChoice(WINDOW * curwin, int &yPos, int &xPos, std::string &sBody,
             wattroff(curwin, COLOR_PAIR(14));
             wrefresh(curwin);
 
-            yPos--;
             break;
 
         case KEY_DOWN:
@@ -136,7 +145,6 @@ void moveChoice(WINDOW * curwin, int &yPos, int &xPos, std::string &sBody,
             wattroff(curwin, COLOR_PAIR(14));
             wrefresh(curwin);
 
-            yPos++;
             break;
 
         case KEY_LEFT:
@@ -145,7 +153,6 @@ void moveChoice(WINDOW * curwin, int &yPos, int &xPos, std::string &sBody,
             wattroff(curwin, COLOR_PAIR(14));
             wrefresh(curwin);
 
-            xPos=xPos-2;
             break;
 
         case KEY_RIGHT:
@@ -154,7 +161,6 @@ void moveChoice(WINDOW * curwin, int &yPos, int &xPos, std::string &sBody,
             wattroff(curwin, COLOR_PAIR(14));
             wrefresh(curwin);
 
-            xPos=xPos+2;
             break;
         
         default:

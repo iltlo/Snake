@@ -44,6 +44,7 @@ void start_game( bool load ){
     if (player->exitFlag) {
         // exit key is pressed
         // TODO: save the game to state.txt
+        sl->showVec(player->get_snake());
     } else {                                                    // game is over, store game and required key confirm to exit
         sl->saveScore(player->get_score());                     // save score to file
         mvwprintw(stdscr, 0, 0, "Press ENTER to quit ...");

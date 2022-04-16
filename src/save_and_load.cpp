@@ -1,5 +1,16 @@
 #include <save_and_load.hpp>
 
+void SaveAndLoad::showVec(std::vector<std::vector<int>> snake) {
+    std::ofstream fout;
+    fout.open("./log/snake.txt");
+    for (int i = 0; i < snake.size(); i++) {
+        for (int j = 0; j < snake[i].size(); j++) {
+            fout << snake[i][j] << " ";
+        }
+        fout << std::endl;
+    }
+}
+
 SaveAndLoad::SaveAndLoad(std::string state_file, std::string score_file) {
     this->state_file = state_file;
     this->score_file = score_file;

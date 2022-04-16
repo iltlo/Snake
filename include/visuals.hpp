@@ -10,6 +10,7 @@
 #include "pause_menu.hpp"
 
 void showHead(WINDOW * curwin, int yPos, int xPos, std::string sHead);
+void showHead(WINDOW * curwin, std::vector< std::vector<int> > &snake, std::string sHead);
 
 void showBody(WINDOW * curwin, std::vector< std::vector<int> > &snake, std::string &sBody);
 
@@ -17,8 +18,7 @@ void drawBorder(WINDOW *& curwin);
 
 int oppoKey(int key);
 
-void moveChoice(WINDOW * curwin, int &yPos, int &xPos, std::string &sBody, 
-                std::vector< std::vector<int> > &snake, int choice, bool &exitFlag);
+void moveChoice(WINDOW * curwin, std::string &sBody, std::vector< std::vector<int> > &snake, int choice);
 
 void cutSnake(WINDOW * curwin, std::vector< std::vector<int> > &snake);
 

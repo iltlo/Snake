@@ -46,7 +46,7 @@ bool Snake::Move(){
     // wrefresh(stdscr);
     // *******
 
-    moveChoice(curwin, yPos, xPos, sBody, snake, choice, exitFlag);
+    moveChoice(curwin, sBody, snake, choice);
 
     if ( isValidMove() ) {                          // check if the input move will lose the game
         showHead(curwin, yPos, xPos, sHead);
@@ -58,6 +58,7 @@ bool Snake::Move(){
         flushinp();                                 // flush all the input buffers (for continuous input control)
         return true;
     } else {    
+        showHead(curwin, snake, sHead);
         return false;
     }
 }
@@ -89,7 +90,7 @@ what it does:
 normalize the choice input to direction keys
 reponse to user key input
     1. spacebar pause
-    2. same direction
+    2. direction
 
 input: previous key input, current key input
 
@@ -98,18 +99,35 @@ output: none
 
 void Snake::keyChoiceProcess(int previous, int &choice) {
 
-    if (choice == 'w') choice = KEY_UP;                                  // map "wasd" to direction keys
+    if (choice == 'w') choice = KEY_UP;                                 // map "wasd" to direction keys
     if (choice == 's') choice = KEY_DOWN;
     if (choice == 'a') choice = KEY_LEFT;
     if (choice == 'd') choice = KEY_RIGHT;
 
-    if ( choice == KEY_KEYBOARD_SPACE ) {
+    if ( choice == KEY_KEYBOARD_SPACE ) {                               // pause, menu bar pops up
         pause_menu(exitFlag);
-        showBody(curwin, snake, sBody); // refresh the snake body once
-    }                   // pasue state turns true (menu bar will pop out)
+        showBody(curwin, snake, sBody);                                 // refresh the snake body once
+    }
     
     if ( choice == previous ) choice = -1;
     if ( isSame_MvDirection(choice) ) choice = previous;                // continue the same path if no input (-1)
+
+    switch(choice){
+        case KEY_UP:
+            yPos--;
+            break;
+        case KEY_DOWN:
+            yPos++;
+            break;
+        case KEY_LEFT:
+            xPos=xPos-2;
+            break;
+        case KEY_RIGHT:
+            xPos=xPos+2;
+            break;
+        default:
+            break;
+    }
 
 }
 

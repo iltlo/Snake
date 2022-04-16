@@ -16,6 +16,8 @@ class SaveAndLoad {
 
         void saveSnake(std::vector<std::vector<int>> snake, int score, int speed, int yApple, int xApple, int appleEaten);
         void loadSnake(std::vector<std::vector<int>> &snake, int &score, int &speed, int &yApple, int &xApple, int &appleEaten);
+
+        void showVec(std::vector<std::vector<int>> snake);
         
     private:
         std::string state_file;

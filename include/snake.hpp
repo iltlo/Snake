@@ -21,6 +21,7 @@ class Snake{
         bool isSame_MvDirection(int choice);
 
         int get_score() { return snakeLen-2; }
+        std::vector< std::vector<int> > get_snake() { return snake; }
         int get_yPos() { return yPos; }
         int get_xPos() { return xPos; }
         std::string get_sHead() { return sHead; }
