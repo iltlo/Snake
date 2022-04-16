@@ -39,7 +39,7 @@ class Snake{
 
     private:
         std::vector< std::vector<int> > snake;  // xy, storage of snake position
-        int xPos, yPos, xMax, yMax;             // Pos: head of the snake Max: game window size
+        int xPos = 39, yPos = 10;               // Pos: head of the snake
 
         int yApple, xApple;
 
@@ -50,7 +50,7 @@ class Snake{
 
         int snakeSpeed = 120;                     // usleep(snakeSpeed*1000)
         bool appleEaten = true;
-        int mvCount = 1, previous;                //totol move count, previous move
+        int mvCount = 1, previous = KEY_RIGHT;                //totol move count, previous move
 
         WINDOW * curwin;
 

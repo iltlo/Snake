@@ -12,7 +12,7 @@ int main()
     noecho();
     start_color();
 
-    bool n_exit_game = true;
+    bool n_exit_game = true, load = false;
 
     // branching the game into serval modes (features/mode to be added)
     while(n_exit_game)
@@ -24,12 +24,16 @@ int main()
         {
             case(s_new_game):
                 closing_start_menu(menu_pic_win, option_win);
-                new_game();
+                start_game(load);
                 break;
 
-            // case(s_option):
-            //     option(option_win);
-            //     break;
+            case(s_load):
+                // option(option_win);
+                // TOOD: handle the case if nothing is saved in state.txt
+                load = true;
+                closing_start_menu(menu_pic_win, option_win);
+                start_game(load);
+                break;
 
             case(s_exit_game):
                 closing_start_menu(menu_pic_win, option_win);

@@ -191,13 +191,13 @@ if snake ate apple,
     2. increase length and speed
 update apple coord and snake length as attribute
 
-input: window pointer, and "player" class object passed by pointer from new_game.cpp
+input: window pointer, and "player" class object passed by pointer from start_game.cpp
 
 output: none
 */
 
 void apple(Snake &p, WINDOW * curwin) {
-    // TODO: increase speed
+
     if ( p.get_yPos() == p.get_yApple() && p.get_xPos() == p.get_xApple() ) {
         p.increment_snakeLen();
 

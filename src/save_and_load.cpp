@@ -1,7 +1,8 @@
 #include <save_and_load.hpp>
 
-SaveAndLoad::SaveAndLoad(std::string file_name) {
-    this->file_name = file_name;
+SaveAndLoad::SaveAndLoad(std::string state_file, std::string score_file) {
+    this->state_file = state_file;
+    this->score_file = score_file;
 }
 
 /*
@@ -17,7 +18,7 @@ output: score and date
 
 void SaveAndLoad::saveScore(int newScore){
     std::ofstream fout;
-    fout.open(file_name.c_str(), std::ios::app);
+    fout.open(score_file.c_str(), std::ios::app);
 
     auto end = std::chrono::system_clock::now();
     std::time_t end_time = std::chrono::system_clock::to_time_t(end);
@@ -41,7 +42,7 @@ outputs: log file sorted by score
 
 void SaveAndLoad::sortLogScore(){
     std::ifstream fin;
-    fin.open(file_name.c_str());
+    fin.open(score_file.c_str());
 
     std::vector<std::string> lines;
     std::string line;
@@ -57,7 +58,7 @@ void SaveAndLoad::sortLogScore(){
     });
 
     std::ofstream fout;
-    fout.open(file_name.c_str());
+    fout.open(score_file.c_str());
     fout << "      ===  LEADERBOARD  ===\n"
             "SCORE |                        DATE" << std::endl;
 

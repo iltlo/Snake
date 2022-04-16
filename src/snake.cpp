@@ -14,9 +14,6 @@ output: loading game message
 
 Snake::Snake(WINDOW * win){       // Snake class constructor
     curwin = win;
-    getmaxyx(curwin, yMax, xMax);
-    yPos = yMax/2-1;
-    xPos = xMax/2-1;
     // mvwprintw(stdscr, 0, 0, "Preparing for new game ...");   // for debug
     keypad(curwin, true);
     curs_set(0);
@@ -51,16 +48,18 @@ bool Snake::Move(){
 
     moveChoice(curwin, yPos, xPos, sBody, snake, choice, exitFlag);
 
-    if ( mvCount >= snakeLen && snake.size()%snakeLen == 0 ) cutSnake(curwin, snake);     // cut the snake tail
-    previous = choice;
-    mvCount++;
+    if ( isValidMove() ) {                          // check if the input move will lose the game
+        showHead(curwin, yPos, xPos, sHead);
+        if ( mvCount >= snakeLen && snake.size()%snakeLen == 0 ) 
+            cutSnake(curwin, snake);     // cut the snake tail
+        previous = choice;
+        mvCount++;
 
-    flushinp();                                 // flush all the input buffers (for continuous input control)
-
-    if ( !isValidMove() )    // check if the input move will lose the game
-        return false;
-    else    
+        flushinp();                                 // flush all the input buffers (for continuous input control)
         return true;
+    } else {    
+        return false;
+    }
 }
 
 /*
@@ -154,8 +153,8 @@ bool Snake::isValidMove(){
     currentLoc.push_back(xPos);
     currentLoc.push_back(yPos);
     if ( std::find(snake.begin(), snake.end()-1, currentLoc) != snake.end()-1
-            || yPos<1 || yPos > yMax-2
-            || xPos<1 || xPos > xMax-3 
+            || yPos<1 || yPos > 23-2
+            || xPos<1 || xPos > 80-3 
             || exitFlag )
         return false; //move is invalid
     return true;

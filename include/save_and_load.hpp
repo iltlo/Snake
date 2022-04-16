@@ -10,7 +10,7 @@
 // save and load class
 class SaveAndLoad {
     public:
-        SaveAndLoad(std::string file_name);
+        SaveAndLoad(std::string state_file, std::string score_file);
         
         void saveScore(int score);
 
@@ -18,6 +18,7 @@ class SaveAndLoad {
         void loadSnake(std::vector<std::vector<int>> &snake, int &score, int &speed, int &yApple, int &xApple, int &appleEaten);
         
     private:
-        std::string file_name;
+        std::string state_file;
+        std::string score_file;
         void sortLogScore();
 };

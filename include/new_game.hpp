@@ -9,4 +9,4 @@
 
 #define KEY_KEYBOARD_ENTER 10
 
-void new_game();
+void start_game( bool load );

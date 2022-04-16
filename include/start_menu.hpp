@@ -5,7 +5,7 @@
 #define term_y 24
 #define term_x 80
 #define s_new_game 0
-#define s_option 1
+#define s_load 1
 #define s_exit_game 2
 #define menu_pic_y term_y
 #define menu_pic_x 70
