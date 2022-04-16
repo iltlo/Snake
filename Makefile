@@ -29,7 +29,7 @@ pause_menu.o: pause_menu.cpp pause_menu.hpp
 
 #########################################
 
-main: main.o start_menu.o new_game.o save_and_load.o snake.o visuals.o pause_menu.o
+main: main.o start_menu.o new_game.o snake.o save_and_load.o visuals.o pause_menu.o
 	g++ $(FLAGS) $^ ${LIB} -o $@
 
 ncurses: FORCE

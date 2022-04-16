@@ -6,6 +6,7 @@
 #include <string>
 
 #include "pause_menu.hpp"
+#include "save_and_load.hpp"
 
 #define KEY_KEYBOARD_SPACE 32
 
@@ -13,6 +14,7 @@ class Snake{
     
     public:
         Snake(WINDOW * win);
+        Snake(WINDOW * win, SaveAndLoad &sl);
 
         bool Move();
         void storeSnake();
@@ -32,12 +34,15 @@ class Snake{
         std::vector< std::vector<int> > get_snake() { return snake; }
         
         // std::string get_sHead() { return sHead; }
-        // std::string get_sBody() { return sBody;}
+        std::string get_sBody() { return sBody;}
         int get_speed() { return snakeSpeed; }
 
-        void set_yApple(int y) { yApple = y; }
-        void set_xApple(int x) { xApple = x; }
-        void set_appleState(bool n) { appleEaten = n; }
+        void set_mvCount(int n) { this->mvCount = n; }
+        void set_previous(int k) { this->previous = k; }
+        void set_yApple(int y) { this->yApple = y; }
+        void set_xApple(int x) { this->xApple = x; }
+        void set_appleState(bool n) { this->appleEaten = n; }
+        void set_snakeLen(int n) { this->snakeLen = n; }
         void increment_snakeLen() { snakeLen++; }
 
         bool exitFlag = false;
@@ -45,17 +50,18 @@ class Snake{
     private:
         std::vector< std::vector<int> > snake;  // xy, storage of snake position
         int xPos = 39, yPos = 10;               // Pos: head of the snake
+        
+        int mvCount = 1, previous = KEY_RIGHT;  //totol move count, previous move
 
         int yApple, xApple;
-
+        bool appleEaten = true;
 
         int snakeLen = 2;
-        std::string sHead = "00";               // head char of the snake
-        std::string sBody = "[]";                // body char of the snake
 
-        int snakeSpeed = 120;                     // usleep(snakeSpeed*1000)
-        bool appleEaten = true;
-        int mvCount = 1, previous = KEY_RIGHT;                //totol move count, previous move
+        std::string sHead = "00";               // head char of the snake
+        std::string sBody = "[]";               // body char of the snake
+
+        int snakeSpeed = 120;                   // usleep(snakeSpeed*1000)
 
         WINDOW * curwin;
 

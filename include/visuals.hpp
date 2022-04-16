@@ -12,7 +12,7 @@
 void showHead(WINDOW * curwin, int yPos, int xPos, std::string sHead);
 void showHead(WINDOW * curwin, std::vector< std::vector<int> > &snake, std::string sHead);
 
-void showBody(WINDOW * curwin, std::vector< std::vector<int> > &snake, std::string &sBody);
+void showBody(WINDOW * curwin, std::vector< std::vector<int> > snake, std::string sBody);
 
 void drawBorder(WINDOW *& curwin);
 

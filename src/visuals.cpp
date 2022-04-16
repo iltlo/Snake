@@ -74,11 +74,11 @@ input: pointer to the game window, coordinate vector and appearance of snake hea
 output: refreshes the whole snake
 */
 
-void showBody(WINDOW * curwin, std::vector< std::vector<int> > &snake, std::string &sBody){
+void showBody(WINDOW * curwin, std::vector< std::vector<int> > snake, std::string sBody) {
     wattron(curwin, COLOR_PAIR(14));
 
-    for (int i=0; i<snake.size()-1; i++){ // the snake head does not need to refresh
-            mvwaddstr(curwin, snake[i][1], snake[i][0], sBody.c_str()); // snake is stored in x-y
+    for (int i=0; i<snake.size(); i++) { 
+        mvwaddstr(curwin, snake[i][1], snake[i][0], sBody.c_str()); // snake is stored in x-y
     }
 
     wattroff(curwin, COLOR_PAIR(14));

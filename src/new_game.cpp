@@ -24,9 +24,15 @@ void start_game( bool load ){
     WINDOW * gamewin = newwin(height, width, starty, startx);
     
     SaveAndLoad * sl = new SaveAndLoad("./log/state.txt", "./log/leaderboard.txt");  // initialized new class member: saveload
-    
-    Snake * player = new Snake(gamewin);                  // initialized new class member with state.txt: player
-    
+    std::ifstream stateFile( (sl->get_state_file()).c_str() );
+
+    Snake * player;
+    if ( load && !sl->is_empty(stateFile) ) {                 // if in load mode and state file is not empty
+        player = new Snake(gamewin, *sl);                     // initialized new class member with state.txt: player
+        showBody(gamewin, player->get_snake(), player->get_sBody());
+    } else {
+        player = new Snake(gamewin);
+    }
     // *******
     // wprintw(stdscr, "%d %d",(chtype)(unsigned char)((player->get_sHead())[0]),(chtype)(unsigned char)(player->get_sBody()[0]) );     //for debug
     // wgetch(stdscr);

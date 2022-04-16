@@ -6,6 +6,9 @@ default class constructor
 
 what it does:
 declare an object to the Snake class
+overloaded to set different default values according to the mode
+    1. Default
+    2. Load game state from file
 
 input: current window
 
@@ -18,6 +21,36 @@ Snake::Snake(WINDOW * win){       // Snake class constructor
     keypad(curwin, true);
     curs_set(0);
 }
+Snake::Snake(WINDOW * win, SaveAndLoad &sl) {
+    curwin = win;
+
+    keypad(curwin, true);
+    curs_set(0);
+
+    std::ifstream fin;
+    fin.open( (sl.get_state_file()).c_str() );
+    if (fin.is_open()) {
+        std::string line;
+        std::getline(fin, line);
+        std::istringstream iss(line);
+        iss >> this->mvCount >> this->previous >> this->yApple >> this->xApple >> this->appleEaten >> this->snakeLen;
+
+        int x, y;
+        while ( std::getline(fin, line) ) {
+            std::istringstream iss2(line);
+            iss2 >> x >> y;
+            this->snake.push_back({x, y});
+        }
+
+        this->xPos = snake[ (this->snakeLen)-1 ][0];
+        this->yPos = snake[ (this->snakeLen)-1 ][1];
+
+        this->snake.pop_back();
+
+        fin.close();
+    }
+}
+
 
 /*
 move method
