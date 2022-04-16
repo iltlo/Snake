@@ -17,7 +17,7 @@ void new_game(){
 
     init_pair(11, COLOR_RED, COLOR_MAGENTA);                    // genApple
     init_pair(12, COLOR_RED, COLOR_CYAN);                       // showHead
-    init_pair(14, COLOR_CYAN, COLOR_GREEN);                     // keyChoice (snake body)
+    init_pair(14, COLOR_CYAN, COLOR_GREEN);                     // moveChoice (snake body)
     init_pair(15, COLOR_BLACK, COLOR_YELLOW);                   // drawBorder
 
     int height=23, width=80, starty=1, startx=0;                // standardized window size to 80x24
@@ -31,25 +31,26 @@ void new_game(){
     // wgetch(stdscr);
     // *******
 
-    drawBorder(gamewin);                                        // TODO: requires further decoration
+    drawBorder(gamewin);
 
     do {                                                        // print snake before getting the choice
         showHead(gamewin, player->get_yPos(), player->get_xPos(), player->get_sHead());
         apple(* player, gamewin);
         mvwprintw(stdscr, 0, 0, "Your Score: \t %d", player->get_score());
         usleep( (player->get_speed())*1000 );                   // unistd.h
-    } while (player->Move() == true);                            // MAIN PROGRAM LOOP
+    } while ( player->Move() == true );                         // MAIN PROGRAM LOOP
 
     // only store game and required key confirm to exit, if the game is over
     if (!player->exitFlag) {
-        sl->saveScore(player->get_score());                         // save score to file
-        getch();
+        sl->saveScore(player->get_score());                     // save score to file
+        mvwprintw(stdscr, 0, 0, "Press ENTER to quit ...");
+        while ( getch() != KEY_KEYBOARD_ENTER );
     }
 
     delete player;                                              // free the memory of the address in pointer
     delete sl;
 
-    player = 0;                                                 // stray pointer -> null pointer
+    player = 0, sl = 0;                                         // stray pointer -> null pointer
 
     endwin(); 
 }

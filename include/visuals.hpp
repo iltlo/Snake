@@ -7,6 +7,7 @@
 #include <array>
 
 #include "snake.hpp"
+#include "pause_menu.hpp"
 
 void showHead(WINDOW * curwin, int yPos, int xPos, std::string sHead);
 
@@ -16,8 +17,8 @@ void drawBorder(WINDOW *& curwin);
 
 int oppoKey(int key);
 
-void keyChoice(WINDOW * curwin, int &yPos, int &xPos, std::string &sBody, 
-                std::vector< std::vector<int> > &snake, int choice, int &pause, bool &exitFlag);
+void moveChoice(WINDOW * curwin, int &yPos, int &xPos, std::string &sBody, 
+                std::vector< std::vector<int> > &snake, int choice, bool &exitFlag);
 
 void cutSnake(WINDOW * curwin, std::vector< std::vector<int> > &snake);
 

@@ -1,5 +1,4 @@
 #include "visuals.hpp"
-#include "pause_menu.hpp"
 
 /*
 draw border function
@@ -69,14 +68,14 @@ output: refreshes the whole snake
 */
 
 void showBody(WINDOW * curwin, std::vector< std::vector<int> > &snake, std::string &sBody){
-    // wattron(curwin, COLOR_PAIR(14));
+    wattron(curwin, COLOR_PAIR(14));
 
     for (int i=0; i<snake.size()-1; i++){ // the snake head does not need to refresh
             mvwaddstr(curwin, snake[i][1], snake[i][0], sBody.c_str()); // snake is stored in x-y
     }
 
-    // wattroff(curwin, COLOR_PAIR(14));
-    // wrefresh(curwin);
+    wattroff(curwin, COLOR_PAIR(14));
+    wrefresh(curwin);
 }
 
 /*
@@ -100,15 +99,6 @@ int oppoKey(int key){
         return KEY_RIGHT;
     if ( key == KEY_RIGHT)
         return KEY_LEFT;
-
-    if ( key == 'w' )
-        return 's';
-    if ( key == 's' )
-        return 'w';
-    if ( key == 'a' )
-        return 'd';
-    if ( key == 'd')
-        return 'a';
     
     return -1;
 }
@@ -117,32 +107,21 @@ int oppoKey(int key){
 key choice function
 
 what it does:
-response to user key input
-    1. spacebar pause
-    2. direction keys
+response to user key input and move the snake
 
 input: window pointer, coordinate and appearance of snake body, keyboard input, and pause state
 
 output: snake body
 */
 
-void keyChoice(WINDOW * curwin, int &yPos, int &xPos, std::string &sBody, 
-                std::vector< std::vector<int> > &snake, int choice, int &pause, bool &exitFlag) {
+void moveChoice(WINDOW * curwin, int &yPos, int &xPos, std::string &sBody, 
+                std::vector< std::vector<int> > &snake, int choice, bool &exitFlag) {
 
     wattron(curwin, COLOR_PAIR(14));
 
-    if (pause == true){
-        pause_menu(exitFlag);
-
-        pause = false; // continue
-        showBody(curwin, snake, sBody); // refresh the snake body once
-    }
-
     switch(choice){
 
-        case 'w':
         case KEY_UP:
-
             mvwaddstr(curwin, yPos, xPos, sBody.c_str());
 
             wattroff(curwin, COLOR_PAIR(14));
@@ -151,9 +130,7 @@ void keyChoice(WINDOW * curwin, int &yPos, int &xPos, std::string &sBody,
             yPos--;
             break;
 
-        case 's':
         case KEY_DOWN:
-
             mvwaddstr(curwin, yPos, xPos, sBody.c_str());
 
             wattroff(curwin, COLOR_PAIR(14));
@@ -162,9 +139,7 @@ void keyChoice(WINDOW * curwin, int &yPos, int &xPos, std::string &sBody,
             yPos++;
             break;
 
-        case 'a':
         case KEY_LEFT:
-
             mvwaddstr(curwin, yPos, xPos, sBody.c_str());
 
             wattroff(curwin, COLOR_PAIR(14));
@@ -173,7 +148,6 @@ void keyChoice(WINDOW * curwin, int &yPos, int &xPos, std::string &sBody,
             xPos=xPos-2;
             break;
 
-        case 'd':
         case KEY_RIGHT:
             mvwaddstr(curwin, yPos, xPos, sBody.c_str());
 

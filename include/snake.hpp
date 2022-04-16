@@ -5,6 +5,8 @@
 #include <vector>
 #include <string>
 
+#include "pause_menu.hpp"
+
 #define KEY_KEYBOARD_SPACE 32
 
 class Snake{
@@ -15,6 +17,7 @@ class Snake{
         bool Move();
         void storeSnake();
         bool isValidMove();
+        void keyChoiceProcess(int previous, int &choice);
         bool isSame_MvDirection(int choice);
 
         int get_score() { return snakeLen-2; }
@@ -45,9 +48,8 @@ class Snake{
         std::string sHead = "00";               // head char of the snake
         std::string sBody = "[]";                // body char of the snake
 
-        int snakeSpeed = 150;                     // usleep(snakeSpeed*1000)
+        int snakeSpeed = 120;                     // usleep(snakeSpeed*1000)
         bool appleEaten = true;
-        int pause = false;
         int mvCount = 1, previous;                //totol move count, previous move
 
         WINDOW * curwin;

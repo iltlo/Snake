@@ -42,16 +42,14 @@ bool Snake::Move(){
     
     int choice = (mvCount==1 ? KEY_RIGHT : wgetch(curwin)); // default run direction: right
 
+
+    keyChoiceProcess(previous, choice);
     // *******
     // mvwprintw(stdscr, 0, 0, "count: %d choice: %d SnkLen: %d VecLen: %lu  ", mvCount, choice, snakeLen, snake.size());   // for debug
     // wrefresh(stdscr);
     // *******
 
-    if ( choice == KEY_KEYBOARD_SPACE ) pause = true;               // pasue state turns true (menu bar will pop out)
-    if ( choice == previous ) choice = -1;
-    if ( isSame_MvDirection(choice) ) choice = previous;    // continue the same path if no input (-1)
-
-    keyChoice(curwin, yPos, xPos, sBody, snake, choice, pause, exitFlag);
+    moveChoice(curwin, yPos, xPos, sBody, snake, choice, exitFlag);
 
     if ( mvCount >= snakeLen && snake.size()%snakeLen == 0 ) cutSnake(curwin, snake);     // cut the snake tail
     previous = choice;
@@ -84,6 +82,59 @@ void Snake::storeSnake(){
     snake[snakeSize==0 ? 0 : snakeSize-1].push_back(yPos);
 }
 
+
+/*
+key choice processing method
+
+what it does:
+normalize the choice input to direction keys
+reponse to user key input
+    1. spacebar pause
+    2. same direction
+
+input: previous key input, current key input
+
+output: none
+*/
+
+void Snake::keyChoiceProcess(int previous, int &choice) {
+
+    if (choice == 'w') choice = KEY_UP;                                  // map "wasd" to direction keys
+    if (choice == 's') choice = KEY_DOWN;
+    if (choice == 'a') choice = KEY_LEFT;
+    if (choice == 'd') choice = KEY_RIGHT;
+
+    if ( choice == KEY_KEYBOARD_SPACE ) {
+        pause_menu(exitFlag);
+        showBody(curwin, snake, sBody); // refresh the snake body once
+    }                   // pasue state turns true (menu bar will pop out)
+    
+    if ( choice == previous ) choice = -1;
+    if ( isSame_MvDirection(choice) ) choice = previous;                // continue the same path if no input (-1)
+
+}
+
+/*
+check same moving direction method
+
+what it does:
+check if choice will make the snake move as the previous direction
+input protection
+
+input: none
+
+output: none
+*/
+
+bool Snake::isSame_MvDirection(int choice){
+    if ( choice == -1 || previous == oppoKey(choice)
+            || ( choice != KEY_UP && choice != KEY_DOWN
+            && choice != KEY_LEFT && choice != KEY_RIGHT ) )
+        return true;
+    else
+        return false;
+}
+
 /*
 check valid move method
 
@@ -108,27 +159,4 @@ bool Snake::isValidMove(){
             || exitFlag )
         return false; //move is invalid
     return true;
-}
-
-/*
-check same moving direction function
-
-what it does:
-check if choice will make the snake move as the previous direction
-input protection
-
-input: none
-
-output: none
-*/
-
-bool Snake::isSame_MvDirection(int choice){
-    if ( pause == true || choice == -1 || previous == oppoKey(choice)
-            || ( choice != KEY_UP && choice != 'w'
-            && choice != KEY_LEFT && choice != 'a'
-            && choice != KEY_DOWN && choice != 's'
-            && choice != KEY_RIGHT && choice != 'd') )
-        return true;
-    else
-        return false;
 }
