@@ -14,10 +14,10 @@ class SaveAndLoad {
         
         void saveScore(int score);
 
-        void saveSnake(std::vector<std::vector<int>> snake, int score, int speed, int yApple, int xApple, int appleEaten);
-        void loadSnake(std::vector<std::vector<int>> &snake, int &score, int &speed, int &yApple, int &xApple, int &appleEaten);
+        void saveState(int mvCount, int previous, int yApple, int xApple, bool appleEaten, int snakeLen, std::vector< std::vector<int> > snake);
+        
+        void delState();
 
-        void showVec(std::vector<std::vector<int>> snake);
         
     private:
         std::string state_file;

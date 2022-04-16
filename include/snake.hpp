@@ -21,15 +21,19 @@ class Snake{
         bool isSame_MvDirection(int choice);
 
         int get_score() { return snakeLen-2; }
-        std::vector< std::vector<int> > get_snake() { return snake; }
         int get_yPos() { return yPos; }
         int get_xPos() { return xPos; }
-        std::string get_sHead() { return sHead; }
-        std::string get_sBody() { return sBody;}
-        int get_speed() { return snakeSpeed; }
-        int get_appleState() { return appleEaten;};
+        int get_mvCount() { return mvCount; }
+        int get_previous() { return previous; }
         int get_yApple() { return yApple; }
         int get_xApple() { return xApple; }
+        bool get_appleState() { return appleEaten;};
+        int get_snakeLen() { return snakeLen; }
+        std::vector< std::vector<int> > get_snake() { return snake; }
+        
+        // std::string get_sHead() { return sHead; }
+        // std::string get_sBody() { return sBody;}
+        int get_speed() { return snakeSpeed; }
 
         void set_yApple(int y) { yApple = y; }
         void set_xApple(int x) { xApple = x; }

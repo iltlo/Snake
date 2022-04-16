@@ -1,19 +1,50 @@
 #include <save_and_load.hpp>
 
-void SaveAndLoad::showVec(std::vector<std::vector<int>> snake) {
+SaveAndLoad::SaveAndLoad(std::string state_file, std::string score_file) {
+    this->state_file = state_file;
+    this->score_file = score_file;
+}
+
+/*
+save state method
+
+what it does:
+saves the current game state
+
+input: mvCount, previous, yApple, xApple, appleEaten, snakeLen, snake
+
+output: to state.txt
+*/
+
+void SaveAndLoad::saveState(int mvCount, int previous, int yApple, int xApple, bool appleEaten, int snakeLen, std::vector< std::vector<int> > snake) {
     std::ofstream fout;
-    fout.open("./log/snake.txt");
+    fout.open(state_file);
+    fout << mvCount << " " << previous << " " << yApple << " " << xApple << " " << appleEaten << " " << snakeLen << std::endl;
     for (int i = 0; i < snake.size(); i++) {
         for (int j = 0; j < snake[i].size(); j++) {
             fout << snake[i][j] << " ";
         }
-        fout << std::endl;
+        if ( i != snake.size()-1 ) fout << std::endl;
     }
+    fout.close();
 }
 
-SaveAndLoad::SaveAndLoad(std::string state_file, std::string score_file) {
-    this->state_file = state_file;
-    this->score_file = score_file;
+
+/*
+delete state method
+
+what it does:
+delete content from status.txt by truncate-option
+
+input: state.txt
+
+output: none
+*/
+
+void SaveAndLoad::delState() {
+    std::ofstream fout;
+    fout.open(state_file, std::ofstream::out | std::ofstream::trunc);
+    fout.close();
 }
 
 /*

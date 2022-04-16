@@ -41,14 +41,12 @@ void start_game( bool load ){
     } while ( player->Move() == true );                         // MAIN PROGRAM LOOP
 
     
-    if (player->exitFlag) {
-        // exit key is pressed
-        // TODO: save the game to state.txt
-        sl->showVec(player->get_snake());
+    if ( player->exitFlag ) {                                   // exit key is pressed, save the game to state.txt
+        sl->saveState(player->get_mvCount(), player->get_previous(), player->get_yApple(), player->get_xApple(), player->get_appleState(), player->get_snakeLen(), player->get_snake());
     } else {                                                    // game is over, store game and required key confirm to exit
         sl->saveScore(player->get_score());                     // save score to file
         mvwprintw(stdscr, 0, 0, "Press ENTER to quit ...");
-        // TODO: delete content from status.txt
+        sl->delState();
         while ( getch() != KEY_KEYBOARD_ENTER );
     }
 
