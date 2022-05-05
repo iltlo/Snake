@@ -71,7 +71,7 @@ char start_menu(WINDOW*& menu_pic_win, WINDOW*& option_win)
 
             case(KEY_DOWN):
             case('s'):
-                if (choice < 2)
+                if (choice < 3)
                     choice++;
                 break;
             
@@ -199,7 +199,7 @@ void render_option(const char& choice, WINDOW*& option_win){
     // initialization
     werase(option_win);
     box(option_win, 0, 0);
-    const char* options[option_number] = {"NEW GAME\0", "LOAD\0", "EXIT\0"};
+    const char* options[option_number] = {"NEW GAME", "LOAD", "SCORES","EXIT"};
 
     // adding strings at the designated position,
     // highlighting the option when currently chosen

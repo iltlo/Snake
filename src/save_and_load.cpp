@@ -101,11 +101,48 @@ void SaveAndLoad::sortLogScore(){
 
     std::ofstream fout;
     fout.open(score_file.c_str());
-    fout << "      ===  LEADERBOARD  ===\n"
+    fout << "      ===  LEADERBOARD  ===        \n"
             "SCORE |                        DATE" << std::endl;
 
     for(auto line : lines){
         fout << line << std::endl;
     }
     fout.close();
+}
+
+/* 
+show_leaderboard function
+
+what it does:
+show leaderboard in the main menu
+
+inputs: a WINDOW pointer for showing leaderboard
+
+outputs: none
+*/
+void show_leaderboard(WINDOW*& leaderboard_win){
+    noecho();
+    init_pair(10, COLOR_WHITE, COLOR_MAGENTA);
+    chtype bound = '#' | A_STANDOUT | COLOR_PAIR(10);
+    wborder(leaderboard_win, bound, bound, bound, bound, bound, bound, bound, bound);
+
+    std::ifstream fin;
+    fin.open("./log/leaderboard.txt");
+    int line_count = 0;
+
+    std::string line;
+    while (std::getline(fin, line) && line_count++ < 7){
+        wmove(leaderboard_win, line_count, 1);
+        waddstr(leaderboard_win, line.c_str());
+    }
+
+    fin.close();
+
+    wrefresh(leaderboard_win);
+    wgetch(leaderboard_win);
+
+    werase(leaderboard_win);
+    wrefresh(leaderboard_win);
+    delwin(leaderboard_win);
+
 }

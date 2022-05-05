@@ -6,12 +6,13 @@
 #define term_x 80
 #define s_new_game 0
 #define s_load 1
-#define s_exit_game 2
+#define s_leaderboard 2
+#define s_exit_game 3
 #define menu_pic_y term_y
 #define menu_pic_x 70
 #define option_win_y term_y
 #define option_win_x term_x - menu_pic_x
-#define option_number 3
+#define option_number 4
 
 #define bg_color COLOR_BLUE
 // #define COLOR_LIGHT_GREEN 2

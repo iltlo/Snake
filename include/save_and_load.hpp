@@ -9,7 +9,10 @@
 #include <chrono>    // for time_t
 #include <ctime>     // for getting current time
 #include <algorithm> // fo sort()
+#include <ncurses.h>
 
+#define leaderboard_win_y 10
+#define leaderboard_win_x 40
 
 // save and load class
 class SaveAndLoad {
@@ -31,3 +34,5 @@ class SaveAndLoad {
         std::string score_file;
         void sortLogScore();
 };
+
+void show_leaderboard(WINDOW*&);
