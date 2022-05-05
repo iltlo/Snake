@@ -1,8 +1,8 @@
-      ===  LEADERBOARD  ===        
-SCORE |                        DATE
-    2 |    Mon Apr 18 10:57:22 2022
-    2 |    Thu May  5 16:24:28 2022
-    2 |    Thu May  5 16:29:52 2022
-    2 |    Thu May  5 16:30:06 2022
-    1 |    Mon Apr 18 10:57:37 2022
-    0 |    Thu May  5 16:07:21 2022
+         ===  LEADERBOARD  ===       
+ SCORE                           DATE
+     2       Thu May  5 16:24:28 2022
+     2       Thu May  5 16:29:52 2022
+     2       Thu May  5 16:30:06 2022
+     2       Mon Apr 18 10:57:22 2022
+     1       Mon Apr 18 10:57:37 2022
+     0       Thu May  5 16:07:21 2022

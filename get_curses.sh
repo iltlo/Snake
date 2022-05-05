@@ -3,7 +3,7 @@
 if [ ! -d ./ncurses ]
 then
     git clone https://github.com/mirror/ncurses.git
-    echo "clone finished."
+    echo "Cloning finished."
 fi
 
 if [ ! -d ~/ncurses_files ]
@@ -15,8 +15,6 @@ then
 
     make -j                     # parallel processing
     make -j install
-    echo "make install finished."
+    echo "Ncurses succesfully set up."
 
 fi
-
-echo "ncurses succesfully set up."

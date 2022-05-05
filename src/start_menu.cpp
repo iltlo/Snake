@@ -207,11 +207,11 @@ void render_option(const char& choice, WINDOW*& option_win){
 
         if (choice == i){
             wattron(option_win, A_STANDOUT);
-            mvwaddstr(option_win, (i+1) * 5, 1, options[i]);
+            mvwaddstr(option_win, (i+1) * 5 - 1, 1, options[i]);
             wattroff(option_win, A_STANDOUT);
         }
         else{
-            mvwaddstr(option_win, (i+1) * 5, 1, options[i]);
+            mvwaddstr(option_win, (i+1) * 5 - 1, 1, options[i]);
         }
     }
     wrefresh(option_win);

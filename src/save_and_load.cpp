@@ -64,8 +64,8 @@ void SaveAndLoad::saveScore(int newScore){
 
     auto end = std::chrono::system_clock::now();
     std::time_t end_time = std::chrono::system_clock::to_time_t(end);
-    fout  << std::setw(5) << newScore << " |";
-    fout  << std::setw(29) << std::ctime(&end_time) ;
+    fout  << std::setw(6) << newScore ;
+    fout  << std::setw(32) << std::ctime(&end_time) ;
     fout.close();
 
     sortLogScore();
@@ -96,13 +96,13 @@ void SaveAndLoad::sortLogScore(){
     fin.close();
 
     std::sort(lines.begin(), lines.end(), [](std::string a, std::string b){
-        return stoi(a.substr(0, 5)) > stoi(b.substr(0, 5));
+        return stoi(a.substr(0, 6)) > stoi(b.substr(0, 6));
     });
 
     std::ofstream fout;
     fout.open(score_file.c_str());
-    fout << "      ===  LEADERBOARD  ===        \n"
-            "SCORE |                        DATE" << std::endl;
+    fout << "         ===  LEADERBOARD  ===       \n"
+            " SCORE                           DATE" << std::endl;
 
     for(auto line : lines){
         fout << line << std::endl;

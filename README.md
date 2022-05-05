@@ -1,14 +1,13 @@
 # Snake Game
-### Team members
+## Team members
 - Lai, Pok Hang
 - Lo, Ian Leong Ting
 
-### Introduction
+## Introduction
 - Snake game based on C++
 - Group Project of ENGG1340
-- Work in progress
 
-### Games Rules
+## Games Rules
 - Player uses arrow keys or WASD to control the snake.
 - Snake should move only inside the yellow border and search for food (red apple).
 - Once the food was eaten, the snake body grows one unit in length.
@@ -16,21 +15,59 @@
 - Game ends if the snake crashes with itself or to the wall.
 - Try to control the snake to eat as many apples as possible!
 
-### Game Elements
+## Game Elements
 1. Generation of random game sets or events
-    - The apples are generated in random (uniformly distrubuted) around the map.
+    - The apples are generated at random (uniformly distributed) around the map.
     - mt19937 pseudo-random generator is used.
 2. Data structures for storing game status
-    - Class `Snake`, will be storing all the properties of the current snake.
+    - Class `Snake`, will store all the properties of the current snake.
+    - Class `SaveAndLoad`, for save and load methods.
 3. Dynamic memory management
-    - `new` operator is used to allocate memory on the free store for the `Snake` object.
+    - `new` operator is used to allocate memory on the free store for `Snake` and `SaveAndLoad` objects.
     - `delete` operator is called to restore the memory allocated when the game ends.
 4. File input/output
-    - The pause menu provides option to save current game status .
-    - At start menu, saved game can be loaded from the `log.txt` file, and continue to play.
-    - After the game ends, the score will be recorded in the `rank.txt` file.
+    - The pause menu provides the option to save current game status.
+    - At start menu, the saved game can be loaded from the `log.txt` file, and continue to play.
+    - After the game ends, the score will be recorded in the `leaderboard.txt` file.
+    - Files are saved under `log` directory.
 5. Program codes in multiple files
-    - (include file tree here after the game is finalized)
+    - `./include` contains header files
+    - `./src` contains source files
+    - `./log` contains files for saving and loading game status
 
-### External Libraries
+## Instructions - how to build
+- Run the following commands in the project root directory
+- Install ncurses library and compile the project 
+    - `make all`
+- Run the game
+    -  `./main`
+
+## External Libraries
 - `ncurses`
+
+## Project Structure
+```
+    .
+    ├── Makefile
+    ├── README.md
+    ├── get_curses.sh
+    ├── include
+    │   ├── new_game.hpp
+    │   ├── pause_menu.hpp
+    │   ├── save_and_load.hpp
+    │   ├── snake.hpp
+    │   ├── start_menu.hpp
+    │   └── visuals.hpp
+    ├── log
+    │   ├── leaderboard.txt
+    │   └── state.txt
+    ├── main.cpp
+    ├── ncurses
+    └── src
+        ├── new_game.cpp
+        ├── pause_menu.cpp
+        ├── save_and_load.cpp
+        ├── snake.cpp
+        ├── start_menu.cpp
+        └── visuals.cpp
+```
