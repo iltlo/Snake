@@ -33,7 +33,6 @@ class Snake{
         int get_snakeLen() { return snakeLen; }
         std::vector< std::vector<int> > get_snake() { return snake; }
         
-        // std::string get_sHead() { return sHead; }
         std::string get_sBody() { return sBody;}
         int get_speed() { return snakeSpeed; }
 

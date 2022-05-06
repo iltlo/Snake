@@ -14,10 +14,8 @@ input: current window
 
 output: loading game message
 */
-
 Snake::Snake(WINDOW * win){       // Snake class constructor
     curwin = win;
-    // mvwprintw(stdscr, 0, 0, "Preparing for new game ...");   // for debug
     keypad(curwin, true);
     curs_set(0);
 }
@@ -63,32 +61,26 @@ input: user key input, and the member attribute
 
 output: none
 */
-
 bool Snake::Move(){
     
     nodelay(curwin,1);
     
-    if ( snake.size() <= snakeLen ) storeSnake();          // storing position of snake tail
+    if ( snake.size() <= snakeLen ) storeSnake();           // storing position of snake tail
     
     int choice = (mvCount==1 ? KEY_RIGHT : wgetch(curwin)); // default run direction: right
 
-
     keyChoiceProcess(previous, choice);
-    // *******
-    // mvwprintw(stdscr, 0, 0, "count: %d choice: %d SnkLen: %d VecLen: %lu  ", mvCount, choice, snakeLen, snake.size());   // for debug
-    // wrefresh(stdscr);
-    // *******
 
     moveChoice(curwin, sBody, snake, choice);
 
-    if ( isValidMove() ) {                          // check if the input move will lose the game
+    if ( isValidMove() ) {                                  // check if the input move will lose the game
         showHead(curwin, yPos, xPos, sHead);
         if ( mvCount >= snakeLen && snake.size()%snakeLen == 0 ) 
-            cutSnake(curwin, snake);     // cut the snake tail
+            cutSnake(curwin, snake);                        // cut the snake tail
         previous = choice;
         mvCount++;
 
-        flushinp();                                 // flush all the input buffers (for continuous input control)
+        flushinp();                                         // flush all the input buffers (for continuous input control)
         return true;
     } else {    
         showHead(curwin, snake, sHead);
@@ -107,7 +99,6 @@ input: current position of snake: xPos yPos
 
 output: none
 */
-
 void Snake::storeSnake(){
     snake.push_back( std::vector<int>() );
     int snakeSize = snake.size();
@@ -129,21 +120,20 @@ input: previous key input, current key input
 
 output: none
 */
-
 void Snake::keyChoiceProcess(int previous, int &choice) {
 
-    if (choice == 'w') choice = KEY_UP;                                 // map "wasd" to direction keys
+    if (choice == 'w') choice = KEY_UP;                     // map "wasd" to direction keys
     if (choice == 's') choice = KEY_DOWN;
     if (choice == 'a') choice = KEY_LEFT;
     if (choice == 'd') choice = KEY_RIGHT;
 
-    if ( choice == KEY_KEYBOARD_SPACE ) {                               // pause, menu bar pops up
+    if ( choice == KEY_KEYBOARD_SPACE ) {                   // pause, menu bar pops up
         pause_menu(exitFlag);
-        showBody(curwin, snake, sBody);                                 // refresh the snake body once
+        showBody(curwin, snake, sBody);                     // refresh the snake body once
     }
     
     if ( choice == previous ) choice = -1;
-    if ( isSame_MvDirection(choice) ) choice = previous;                // continue the same path if no input (-1)
+    if ( isSame_MvDirection(choice) ) choice = previous;    // continue the same path if no input (-1)
 
     switch(choice){
         case KEY_UP:
@@ -175,7 +165,6 @@ input: none
 
 output: none
 */
-
 bool Snake::isSame_MvDirection(int choice){
     if ( choice == -1 || previous == oppoKey(choice)
             || ( choice != KEY_UP && choice != KEY_DOWN
@@ -198,7 +187,6 @@ input: snake head position, snake body coordinate, window size
 
 output: none
 */
-
 bool Snake::isValidMove(){
     std::vector<int> currentLoc;
     currentLoc.push_back(xPos);

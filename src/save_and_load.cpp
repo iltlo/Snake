@@ -15,7 +15,6 @@ input: mvCount, previous, yApple, xApple, appleEaten, snakeLen, snake
 
 output: to state.txt
 */
-
 void SaveAndLoad::saveState(int mvCount, int previous, int yApple, int xApple, bool appleEaten, int snakeLen, std::vector< std::vector<int> > snake) {
     std::ofstream fout;
     fout.open(state_file);
@@ -40,7 +39,6 @@ input: state.txt
 
 output: none
 */
-
 void SaveAndLoad::delState() {
     std::ofstream fout;
     fout.open(state_file, std::ofstream::out | std::ofstream::trunc);
@@ -57,7 +55,6 @@ input: none
 
 output: score and date
 */
-
 void SaveAndLoad::saveScore(int newScore){
     std::ofstream fout;
     fout.open(score_file.c_str(), std::ios::app);
@@ -81,7 +78,6 @@ inputs: current log file
 
 outputs: log file sorted by score
 */
-
 void SaveAndLoad::sortLogScore(){
     std::ifstream fin;
     fin.open(score_file.c_str());
@@ -144,5 +140,4 @@ void show_leaderboard(WINDOW*& leaderboard_win){
     werase(leaderboard_win);
     wrefresh(leaderboard_win);
     delwin(leaderboard_win);
-
 }

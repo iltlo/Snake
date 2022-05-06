@@ -10,18 +10,14 @@ input: pointer to the specified window (game window)
 
 output: drawn border around the window
 */
-
 void drawBorder(WINDOW *& curwin){
 
     init_pair( 1, COLOR_BLACK, COLOR_YELLOW);
     chtype fence_lr = '#' | A_BOLD | A_STANDOUT | COLOR_PAIR(1);
     chtype fence_ud = 'X' | A_BOLD | A_STANDOUT | COLOR_PAIR(1);
     chtype fence_corner = 'X' | A_BOLD | A_STANDOUT | COLOR_PAIR(1);
-    // wattron(curwin, 15);
 
     wborder(curwin, fence_lr, fence_lr,fence_ud,fence_ud,fence_corner,fence_corner,fence_corner,fence_corner);
-
-    // wattroff(curwin, 15);
 
     wrefresh(stdscr);
     wrefresh(curwin);
@@ -39,7 +35,6 @@ input: pointer to the game window, coordinate and appearance of snake head
 
 output: shows snake head (as string)
 */
-
 void showHead(WINDOW * curwin, int yPos, int xPos, std::string sHead){              // shows the head of the snake
 
     wattron(curwin, COLOR_PAIR(12));
@@ -73,7 +68,6 @@ input: pointer to the game window, coordinate vector and appearance of snake hea
 
 output: refreshes the whole snake
 */
-
 void showBody(WINDOW * curwin, std::vector< std::vector<int> > snake, std::string sBody) {
     wattron(curwin, COLOR_PAIR(14));
 
@@ -95,7 +89,6 @@ input: key input
 
 output: mapped opposite keyvalue as return value
 */
-
 int oppoKey(int key){
 
     if ( key == KEY_UP )
@@ -120,7 +113,6 @@ input: window pointer, coordinate and appearance of snake body, keyboard input
 
 output: snake body
 */
-
 void moveChoice(WINDOW * curwin, std::string &sBody, std::vector< std::vector<int> > &snake, int choice) {
     
     int snakeSize = snake.size();
@@ -178,13 +170,11 @@ input: window pointer, snake vector
 
 output: blank space to cover the snake tail
 */
-
-
 void cutSnake(WINDOW * curwin, std::vector< std::vector<int> > &snake){
 
     mvwaddstr(curwin, snake[0][1], snake[0][0], "  ");
 
-    snake.erase(snake.begin());                                                    //first element in snake vec: tail of snake
+    snake.erase(snake.begin());                                             // first element in snake vec: tail of snake
 
 }
 
@@ -201,7 +191,6 @@ input: window pointer, and "player" class object passed by pointer from start_ga
 
 output: none
 */
-
 void apple(Snake &p, WINDOW * curwin) {
 
     if ( p.get_yPos() == p.get_yApple() && p.get_xPos() == p.get_xApple() ) {
@@ -238,7 +227,6 @@ input: window pointer
 
 output: red apple on the screen, array of the apple's int coordinate
 */
-
 std::array<int, 2> genApple(Snake &p, WINDOW * win, bool appleEaten){
 
     std::string apple = "()";
@@ -246,23 +234,16 @@ std::array<int, 2> genApple(Snake &p, WINDOW * win, bool appleEaten){
     chtype ch;
 
     if (appleEaten == true) {
-
         std::random_device rd;
         std::mt19937 generator(rd());
         std::uniform_int_distribution<int> unif(1, 819);
-        // printw("Min: %d Max: %d", generator.min(), generator.max());
 
         do {
             int applePos = unif(generator);
             yApple = applePos/40+1;
             xApple = ( (xApple=(applePos%39)*2-1)==-1 ? 77 : xApple ) ;     //xApple: (applePos%39)*2-1),  == -1 indicates: y-index = 77
             ch = mvwinch(win, yApple, xApple);
-            // *******
-            // mvwprintw(stdscr, 0, 0, "yApple: %d xApple: %d ch: %d   ", yApple, xApple, ch);   // for debug
-            // wrefresh(stdscr);
-            // *******
-        } while ( ch == 3120 || ch == 3675 );               // 3120: chtype of highlighted sHead[0], 3675: sBody[0]
-    // printw("applePos: %d x-y: %d %d", applePos, xApple, yApple);
+        } while ( ch == 3120 || ch == 3675 );                               // 3120: chtype of highlighted sHead[0], 3675: sBody[0]
     }
     else {
         yApple = p.get_yApple();
@@ -270,11 +251,8 @@ std::array<int, 2> genApple(Snake &p, WINDOW * win, bool appleEaten){
     }
 
     wattron(win, COLOR_PAIR(11));
-    // wattron(win, A_BLINK);
-
     mvwprintw(win, yApple, xApple, "%s", apple.c_str());
     wattroff(win, COLOR_PAIR(11));
-    // wattroff(win, A_BLINK);
     
     wrefresh(stdscr);
     wrefresh(win);
