@@ -6,6 +6,9 @@
 ## Introduction
 - Snake game based on C++
 - Group Project of ENGG1340
+![demo_1](demo/demo_1.png)
+![demo_2](demo/demo_2.png)
+![demo_3](demo/demo_3.png)
 
 ## Games Rules
 - Player uses arrow keys or WASD to control the snake.
@@ -35,12 +38,17 @@
     - `./src` contains source files
     - `./log` contains files for saving and loading game status
 
-## Instructions - how to build
+## Compilation and Execution Instructions
+### How to Build
 - Run the following commands in the project root directory
 - Install ncurses library and compile the project 
     - `make all`
 - Run the game
     -  `./main`
+### Note
+- `make ncurses` will automatically run upon `make all`, it will clone the `ncurses` library under the project directory (`./ncurses`), and install it under your home directory (`~/ncurses_files`). Make sure that no colliding directory names exist. 
+- The clone, install and compile process takes around 1-2 minutes when running `make all` the first time.
+- Fully built and tested on HKU `academy11` server
 
 ## External Libraries
 - `ncurses`
