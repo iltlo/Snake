@@ -9,6 +9,7 @@
 ![demo_1](demo/demo_1.png)
 ![demo_2](demo/demo_2.png)
 ![demo_3](demo/demo_3.png)
+![demo_4](demo/demo_4.png)
 
 ## Games Rules
 - Player uses arrow keys or WASD to control the snake.
@@ -58,6 +59,11 @@
     .
     ├── Makefile
     ├── README.md
+    ├── demo
+    │   ├── demo_1.png
+    │   ├── demo_2.png
+    │   ├── demo_3.png
+    │   └── demo_4.png
     ├── get_curses.sh
     ├── include
     │   ├── new_game.hpp
