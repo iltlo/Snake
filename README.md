@@ -12,10 +12,12 @@
 ![demo_4](demo/demo_4.png)
 
 ## Games Rules
-- Player uses arrow keys or WASD to control the snake.
+- Keys:
+    - Arrow / WASD: Menu bar navigation, snake movement control
+    - Enter: Select menu option
+    - Spacebar: Pause
 - Snake should move only inside the yellow border and search for food (red apple).
 - Once the food was eaten, the snake body grows one unit in length.
-- Pressing spacebar can pause the game.
 - Game ends if the snake crashes with itself or to the wall.
 - Try to control the snake to eat as many apples as possible!
 
@@ -47,11 +49,12 @@
 - Run the game
     -  `./main`
 ### Note
-- `make ncurses` will automatically run upon `make all`, it will clone the `ncurses` library under the project directory (`./ncurses`), and install it under your home directory (`~/ncurses_files`). Make sure that no colliding directory names exist. 
+- `make ncurses` will automatically run upon `make all`, it will clone the `ncurses` library under the project directory (`./ncurses`), and install it under your home directory (`~/ncurses_files`). Make sure that no non-empty colliding directories exist. 
 - The clone, install and compile process takes around 1-2 minutes when running `make all` the first time.
-- Fully built and tested on HKU `academy11` server
+- `make clean` can remove object files and executable.
+- Fully built and tested on HKU `academy11` server.
 
-## External Libraries
+## External Library
 - `ncurses`
 
 ## Project Structure
