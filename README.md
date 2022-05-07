@@ -52,6 +52,7 @@
 - `make ncurses` will automatically run upon `make all`, it will clone the `ncurses` library under the project directory (`./ncurses`), and install it under your home directory (`~/ncurses_files`). Make sure that no non-empty colliding directories exist. 
 - The clone, install and compile process takes around 1-2 minutes when running `make all` the first time.
 - `make clean` can remove object files and executable.
+- `make clear-score` can clear the game score history.
 - Fully built and tested on HKU `academy11` server.
 
 ## External Library
@@ -67,7 +68,7 @@
     │   ├── demo_2.png
     │   ├── demo_3.png
     │   └── demo_4.png
-    ├── get_curses.sh
+    ├── get_ncurses.sh
     ├── include
     │   ├── new_game.hpp
     │   ├── pause_menu.hpp
@@ -76,6 +77,7 @@
     │   ├── start_menu.hpp
     │   └── visuals.hpp
     ├── log
+    │   ├── clear-score.sh
     │   ├── leaderboard.txt
     │   └── state.txt
     ├── main.cpp

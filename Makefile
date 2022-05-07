@@ -35,12 +35,15 @@ main: main.o start_menu.o new_game.o snake.o save_and_load.o visuals.o pause_men
 	@echo "Compilation finished!"
 
 ncurses: FORCE
-	@chmod u+x get_curses.sh
-	@./get_curses.sh
+	@chmod u+x get_ncurses.sh
+	@./get_ncurses.sh
 FORCE: 
 
 clean:
 	@rm -f *.o main
 	@echo "Object files and executable cleaned!"
+clear-score:
+	@chmod u+x ./log/clear-score.sh
+	@./log/clear-score.sh
 
-.PHONY: clean
+.PHONY: clean clear-score

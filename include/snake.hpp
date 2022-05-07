@@ -60,7 +60,7 @@ class Snake{
         std::string sHead = "00";               // head char of the snake
         std::string sBody = "[]";               // body char of the snake
 
-        int snakeSpeed = 135;                   // usleep(snakeSpeed*1000)
+        int snakeSpeed = 140;                   // usleep(snakeSpeed*1000) 
 
         WINDOW * curwin;
 
