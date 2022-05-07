@@ -31,8 +31,6 @@ int main()
                 break;
 
             case(s_load):
-                // option(option_win);
-                // TOOD: handle the case if nothing is saved in state.txt
                 load = true;
                 closing_start_menu(menu_pic_win, option_win);
                 start_game(load);

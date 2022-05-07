@@ -118,10 +118,13 @@ outputs: none
 */
 void show_leaderboard(WINDOW*& leaderboard_win){
     noecho();
+
+    // draw the boarder
     init_pair(10, COLOR_WHITE, COLOR_MAGENTA);
     chtype bound = '#' | A_STANDOUT | COLOR_PAIR(10);
     wborder(leaderboard_win, bound, bound, bound, bound, bound, bound, bound, bound);
 
+    // take in leaderboard from the file and print it on the given window
     std::ifstream fin;
     fin.open("./log/leaderboard.txt");
     int line_count = 0;

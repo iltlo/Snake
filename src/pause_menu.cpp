@@ -41,10 +41,6 @@ void pause_menu(bool &exitFlag) {
                 n_chosen = false;
                 break;
 
-            case(KEY_R):
-                render_pause_menu(choice, pause_menu_win);
-                break;
-
             default:
                 break;
         }
@@ -75,15 +71,10 @@ outputs: none
 */
 void render_pause_menu(char choice, WINDOW*& pause_menu_win){
 
-    init_pair( 1, COLOR_BLACK, COLOR_YELLOW);
-    chtype border_lr = '^' | A_BOLD | A_STANDOUT | COLOR_PAIR(1);
-    chtype border_ud = '=' | A_BOLD | A_STANDOUT | COLOR_PAIR(1);
-    chtype border_corner = '@' | A_BOLD | A_STANDOUT | COLOR_PAIR(1);
-
-    wborder(pause_menu_win, border_lr, border_lr,border_ud,border_ud,border_corner,border_corner,border_corner,border_corner);
-    
+    // draw the boarder
     werase(pause_menu_win);
     box(pause_menu_win, 0, 0);
+
     const char* options[pause_menu_option_number] = {"CONTINUE\0", "SAVE GAME AND EXIT\0"};
 
     for (char i = 0; i < pause_menu_option_number; i++){
@@ -98,6 +89,7 @@ void render_pause_menu(char choice, WINDOW*& pause_menu_win){
         }
     }
 
+    // print this specific string separate from the main reandering loop
     wattron(pause_menu_win, A_BLINK);
     mvwaddstr(pause_menu_win, 1, (pause_menu_x-13)/2, "*GAME PAUSED*");
     wattroff(pause_menu_win, A_BLINK);

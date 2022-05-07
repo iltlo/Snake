@@ -12,7 +12,6 @@ inputs: none
 
 outputs: game window
 */
-
 void start_game( bool load ){
 
     init_pair(11, COLOR_RED, COLOR_MAGENTA);                    // genApple

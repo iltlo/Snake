@@ -27,5 +27,3 @@ char start_menu(WINDOW*&, WINDOW*&);
 void render_menu_pic(WINDOW*&);
 void render_option(const char&, WINDOW*&);
 void closing_start_menu(WINDOW*&, WINDOW*&);
-
-extern const std::string menu_pic;

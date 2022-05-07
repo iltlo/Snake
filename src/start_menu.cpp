@@ -13,7 +13,6 @@ R"(        &&&&((((((&&&&&(((((((((((((&&&&&((((####%&&&&                )"
 R"(        &&&&(****(((((((((((&((((((((((((****####%&&&&                )"
 R"(        &&&&(****((((((((((((((((((((((((****&&&&%&&&&                )"
 R"(            &&&&&###########################&                         )"
-/*R"(                &&&&&&&&&&&&&&&&&&&&&&&&&&&&&                         )",*/
 R"(                &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&                      )"
 R"(        &&&&&&&&&((((((((((&&&&((((((((((####&&&&  &&&                )"
 R"(        &&&&&&&&&((((((((((&&&&((((((((((####&&&&&&##&                )"
@@ -27,7 +26,6 @@ R"(    &&&&&&####&####################################%&&&&&&&&####%&&&& )"
 R"(    &&&&&&%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%&&&&&&&&&##&&&&&& )"
 R"(          &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&        &&&&&&    )"
 ;
-
 // '(' , '#' = green, '%' = dark green , '&' = black , '*' = red , others = blue (background_color)
 // concatenating the raw string literals into one big array, 
 // thus speeding up the loading time in game
@@ -47,14 +45,12 @@ inputs: two WINDOW pointers for menu picture and option window respectively
 
 outputs: player's choice on the option window in type char
 */
-
 char start_menu(WINDOW*& menu_pic_win, WINDOW*& option_win)
 {
-    curs_set(0);
-
     char choice = 0;
     bool n_chosen = true;
     keypad(option_win, true);
+    curs_set(0);
 
     render_menu_pic(menu_pic_win);
     render_option(choice, option_win);
@@ -79,7 +75,7 @@ char start_menu(WINDOW*& menu_pic_win, WINDOW*& option_win)
                 n_chosen = false;
                 break;
 
-            case(KEY_R):
+            case(KEY_R): // allowing manual refreshing screen by pressing R for recovering broken screen due to accidental changes on terminal size
                 render_menu_pic(menu_pic_win);
                 render_option(choice, option_win);
                 break;
@@ -105,21 +101,11 @@ inputs: a WINDOW pointer for menu picture
 
 outputs: none
 */
-
 void render_menu_pic(WINDOW*& menu_pic_win){
 
-    // as customized color are not available in most terminal, default color will be used
-    // init_color(COLOR_LIGHT_GREEN, 0, 901, 0);
-    // init_color(COLOR_DARK_GREEN, 0, 783, 0);
-    // init_color(COLOR_PINK, 999, 713, 756);
-    // init_pair(0, COLOR_DARK_GREEN, bg_color );
-    // init_pair(1,  COLOR_LIGHT_GREEN , bg_color );
-    // init_pair(2, COLOR_LIGHT_GREEN , bg_color );
-    // init_pair(3, COLOR_PINK ,  bg_color );
-    // init_pair(4,  COLOR_BLACK , bg_color );
-    // init_pair(5, bg_color , bg_color );
+    wclear(menu_pic_win); // clearing in case anything left behind before rendering
 
-    wclear(menu_pic_win);
+    // initializing needed color pairs for the picture
     init_pair(1, COLOR_GREEN, bg_color );
     init_pair(2,  COLOR_GREEN , bg_color );
     init_pair(3, COLOR_GREEN , bg_color );
@@ -166,14 +152,10 @@ void render_menu_pic(WINDOW*& menu_pic_win){
                 break;
             }
 
-            // for debugging (commented)
-            // mvwprintw(menu_pic_win,20,45,"%d", init_color(COLOR_PINK, 999, 713, 756));
-            // mvwprintw(menu_pic_win,20,50,"%d", can_change_color());
-
         }
     }
 
-    // adding characters with unique features separately at the end
+    // adding characters with unique features separately after the main rendering loop
     wattron(menu_pic_win, A_BOLD | A_BLINK);
     mvwaddstr(menu_pic_win, 2, 55, "S N A K E");
     mvwaddstr(menu_pic_win, 3, 58, "G A M E");
@@ -193,10 +175,8 @@ inputs: a WINDOW pointer for option window
 
 outputs: none
 */
-
 void render_option(const char& choice, WINDOW*& option_win){
 
-    // initialization
     werase(option_win);
     box(option_win, 0, 0);
     const char* options[option_number] = {"NEW GAME", "LOAD", "SCORES","EXIT"};
@@ -228,6 +208,7 @@ inputs: two WINDOW pointer for menu picture and option window
 outputs: none
 */
 void closing_start_menu(WINDOW*& menu_pic_win, WINDOW*& option_win){
+
     // closing start menu 
     werase(menu_pic_win);
     werase(option_win);
